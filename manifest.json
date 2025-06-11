@@ -1,0 +1,16 @@
+{
+  "name": "Medical Malarkey Generator",
+  "short_name": "MedMalarkey",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1e1e1e",
+  "theme_color": "#ff6347",
+  "description": "An AI-powered podcast generator for roasting weird medical papers.",
+  "icons": [
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

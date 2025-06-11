@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Malarkey Generator</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6347"/>
+
+    <style>
+        /* Basic styling */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1e1e1e; 
+            color: #f0f0f0; 
+            margin: 0; 
+        }
+        header { 
+            background-color: #333; 
+            padding: 1rem; 
+            text-align: center; 
+            border-bottom: 2px solid #ff6347;
+        }
+        main { 
+            padding: 1rem; 
+            max-width: 800px; 
+            margin: auto; 
+        }
+        button { 
+            background-color: #ff6347; 
+            color: white; 
+            border: none; 
+            padding: 12px 18px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 1rem;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 5px;
+        }
+        button:hover { 
+            background-color: #e55337; 
+        }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        input, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 5px; 
+            border: 1px solid #555; 
+            background-color: #333; 
+            color: white; 
+            margin-bottom: 1rem; 
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        textarea { 
+            min-height: 250px; 
+            white-space: pre-wrap;
+        }
+
+        /* View Management */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .hidden { display: none !important; }
+
+        /* Paper List Styling */
+        #papers-list { margin-top: 1rem; }
+        .paper-item { 
+            border: 1px solid #444; 
+            padding: 1rem; 
+            margin-bottom: 1rem; 
+            border-radius: 5px; 
+            background-color: #2a2a2a;
+        }
+        .paper-item h3 { margin-top: 0; color: #ff6347; }
+        .paper-item button { margin-top: 1rem; }
+
+        /* Voice Selection Styling */
+        .voice-selection {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .voice-selection label {
+            font-weight: bold;
+        }
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            font-size: 0.9rem;
+        }
+
+        /* --- NEW: Event Log Styling --- */
+        #log-container {
+            margin-top: 2.5rem;
+            border-top: 2px solid #555;
+            padding-top: 1rem;
+        }
+        #log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        #log-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        #log-header button {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            background-color: #555;
+        }
+        #log-output {
+            background-color: #111;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        .log-entry { margin-bottom: 4px; }
+        .log-INFO { color: #f0f0f0; }
+        .log-SUCCESS { color: #81c784; } /* Green */
+        .log-ERROR { color: #e57373; font-weight: bold; } /* Red */
+        .log-WARN { color: #ffd54f; } /* Yellow */
+        .log-ACTION { color: #64b5f6; font-weight: bold; } /* Blue */
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Medical Malarkey Generator</h1>
+    </header>
+    <main>
+        <!-- Views (Unchanged) -->
+        <div id="settings-view" class="view active">
+            <h2>Settings</h2>
+            <p>Your API key is stored locally in your browser and is never shared.</p>
+            <input type="password" id="gemini-key-input" placeholder="Enter your Gemini API Key">
+            <button id="save-key-btn">Save Key & Start</button>
+        </div>
+        <div id="fetch-view" class="view">
+            <h2>Step 1: Find a Paper</h2>
+            <button id="fetch-papers-btn">Fetch Recent Papers</button>
+            <div id="loader" class="hidden">Loading...</div>
+            <div id="papers-list"></div>
+        </div>
+        <div id="generate-view" class="view">
+            <h2>Step 2: Generate Podcast Script</h2>
+            <p><strong>Selected Paper:</strong> <span id="selected-paper-title"></span></p>
+            <button id="generate-script-btn">Generate Roast Script!</button>
+            <div id="script-loader" class="hidden">The comedy duo is conferring...</div>
+            <textarea id="script-output" readonly placeholder="The generated script will appear here..."></textarea>
+        </div>
+        <div id="listen-view" class="view">
+            <h2>Step 3: Create and Listen to the Podcast</h2>
+             <div class="voice-selection">
+                <label for="anya-voice-select">Dr. Anya Sharma's Voice:</label>
+                <select id="anya-voice-select"></select>
+            </div>
+            <div class="voice-selection">
+                <label for="ben-voice-select">Ben Carter's Voice:</label>
+                <select id="ben-voice-select"></select>
+            </div>
+            <button id="speak-btn">Play Podcast Conversation</button>
+            <button id="stop-btn">Stop Playback</button>
+            <button id="back-to-start-btn">Start Over</button>
+        </div>
+
+        <!-- NEW: Event Log -->
+        <div id="log-container">
+            <div id="log-header">
+                <h2>Event Log</h2>
+                <button id="clear-log-btn">Clear Log</button>
+            </div>
+            <pre id="log-output"></pre>
+        </div>
+    </main>
+
+    <script>
+        // --- NEW: Log Output Element ---
+        const logOutput = document.getElementById('log-output');
+
+        // --- NEW: Centralized Logging Function ---
+        function logEvent(message, type = 'INFO') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = `[${timestamp} ${type}] ${message}`;
+
+            switch (type) {
+                case 'ERROR': console.error(`[${type}] ${message}`); break;
+                case 'WARN': console.warn(`[${type}] ${message}`); break;
+                default: console.log(`[${type}] ${message}`);
+            }
+
+            logOutput.appendChild(logEntry);
+            logOutput.scrollTop = logOutput.scrollHeight;
+        }
+
+        // 1. INITIAL SETUP & PWA REGISTRATION
+        window.addEventListener('load', () => {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then(reg => logEvent('Service Worker registered successfully.', 'SUCCESS'))
+              .catch(err => logEvent(`Service Worker registration failed: ${err}`, 'ERROR'));
+          }
+          initializeApp();
+        });
+
+        // DOM Elements
+        const views = document.querySelectorAll('.view');
+        const geminiKeyInput = document.getElementById('gemini-key-input');
+        const saveKeyBtn = document.getElementById('save-key-btn');
+        const fetchPapersBtn = document.getElementById('fetch-papers-btn');
+        const papersList = document.getElementById('papers-list');
+        const selectedPaperTitle = document.getElementById('selected-paper-title');
+        const generateScriptBtn = document.getElementById('generate-script-btn');
+        const scriptOutput = document.getElementById('script-output');
+        const speakBtn = document.getElementById('speak-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const backToStartBtn = document.getElementById('back-to-start-btn');
+        const loader = document.getElementById('loader');
+        const scriptLoader = document.getElementById('script-loader');
+        const anyaVoiceSelect = document.getElementById('anya-voice-select');
+        const benVoiceSelect = document.getElementById('ben-voice-select');
+        const clearLogBtn = document.getElementById('clear-log-btn');
+
+        let geminiApiKey = '';
+        let selectedPaper = null;
+        let conversationalScript = [];
+        let voices = [];
+
+        // 2. APP INITIALIZATION & VIEW MANAGEMENT
+        function initializeApp() {
+            logEvent('Initializing application...');
+            geminiApiKey = localStorage.getItem('geminiApiKey');
+            if (geminiApiKey) {
+                logEvent('Gemini API key found in local storage.', 'SUCCESS');
+                showView('fetch-view');
+            } else {
+                logEvent('No API key found. Showing settings view.', 'WARN');
+                showView('settings-view');
+            }
+            
+            loadVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = loadVoices;
+            }
+
+            saveKeyBtn.addEventListener('click', saveKeyAndStart);
+            fetchPapersBtn.addEventListener('click', handleFetchPapers);
+            generateScriptBtn.addEventListener('click', handleGenerateScript);
+            speakBtn.addEventListener('click', playConversationalScript);
+            stopBtn.addEventListener('click', () => {
+                window.speechSynthesis.cancel();
+                logEvent('Playback stopped by user.', 'ACTION');
+            });
+            backToStartBtn.addEventListener('click', () => {
+                logEvent('Resetting application state.', 'ACTION');
+                selectedPaper = null;
+                scriptOutput.value = '';
+                papersList.innerHTML = '';
+                conversationalScript = [];
+                showView('fetch-view');
+            });
+            clearLogBtn.addEventListener('click', () => {
+                logOutput.innerHTML = '';
+                logEvent('Log cleared.');
+            });
+        }
+
+        function showView(viewId) {
+            views.forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            logEvent(`Navigated to view: ${viewId}.`);
+        }
+
+        function saveKeyAndStart() {
+            const key = geminiKeyInput.value.trim();
+            if (key) {
+                localStorage.setItem('geminiApiKey', key);
+                geminiApiKey = key;
+                logEvent('Gemini API Key saved to local storage.', 'SUCCESS');
+                showView('fetch-view');
+            } else {
+                logEvent('Save attempt failed: API key input was empty.', 'WARN');
+            }
+        }
+
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+            if (voices.length === 0) {
+                 logEvent('Speech synthesis voices not ready yet.', 'WARN');
+                 return;
+            }
+            logEvent(`Found ${voices.length} speech synthesis voices.`);
+            anyaVoiceSelect.innerHTML = '';
+            benVoiceSelect.innerHTML = '';
+            voices
+                .filter(voice => voice.lang.startsWith('en'))
+                .forEach(voice => {
+                    const option = document.createElement('option');
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    option.setAttribute('data-name', voice.name);
+                    anyaVoiceSelect.appendChild(option.cloneNode(true));
+                    benVoiceSelect.appendChild(option.cloneNode(true));
+                });
+            const defaultAnyaIndex = voices.findIndex(v => v.name === 'Google US English' || v.name.includes('Female'));
+            const defaultBenIndex = voices.findIndex(v => v.name === 'Microsoft David - English (United States)' || v.name.includes('Male'));
+            anyaVoiceSelect.selectedIndex = defaultAnyaIndex !== -1 ? defaultAnyaIndex : 0;
+            benVoiceSelect.selectedIndex = defaultBenIndex !== -1 ? defaultBenIndex : 1;
+            logEvent('Voice selection dropdowns populated.', 'SUCCESS');
+        }
+
+        // 3. STEP 1: FETCHING PAPERS FROM PUBMED
+        async function handleFetchPapers() {
+            logEvent('Fetching papers from PubMed API...', 'ACTION');
+            loader.classList.remove('hidden');
+            fetchPapersBtn.disabled = true;
+            papersList.innerHTML = '';
+
+            try {
+                const sixMonthsAgo = new Date();
+                sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                const dateStr = `${sixMonthsAgo.getFullYear()}/${(sixMonthsAgo.getMonth() + 1).toString().padStart(2, '0')}/${sixMonthsAgo.getDate().toString().padStart(2, '0')}`;
+                const searchQuery = `(("BMJ"[Journal]) OR ("The Lancet"[Journal]) OR ("New England Journal of Medicine"[Journal])) AND ("${dateStr}"[Date - Publication] : "3000"[Date - Publication]) AND "free full text"[Filter]`;
+                logEvent(`PubMed Query: ${searchQuery}`);
+                const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodeURIComponent(searchQuery)}&retmode=json&retmax=50`;
+                const searchResponse = await fetch(searchUrl);
+                const searchData = await searchResponse.json();
+                const paperIds = searchData.esearchresult.idlist;
+                logEvent(`Found ${paperIds.length} paper IDs.`);
+
+                if (paperIds.length === 0) {
+                    logEvent('No recent free papers found from the selected journals.', 'WARN');
+                    papersList.innerHTML = '<p>No recent free papers found from the selected journals.</p>';
+                    return;
+                }
+
+                const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${paperIds.join(',')}&retmode=xml`;
+                const fetchResponse = await fetch(fetchUrl);
+                const xmlText = await fetchResponse.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+                const articles = xmlDoc.getElementsByTagName('PubmedArticle');
+                logEvent(`Fetched details for ${articles.length} papers. Rendering list.`, 'SUCCESS');
+                
+                for (const article of articles) {
+                    const title = article.getElementsByTagName('ArticleTitle')[0]?.textContent || 'No Title';
+                    const abstract = article.getElementsByTagName('AbstractText')[0]?.textContent || 'No Abstract';
+                    const journal = article.getElementsByTagName('Title')[0]?.textContent || 'N/A';
+                    const paperData = { title, abstract, journal };
+                    const paperElement = document.createElement('div');
+                    paperElement.className = 'paper-item';
+                    paperElement.innerHTML = `<h3>${title}</h3><p><strong>Journal:</strong> ${journal}</p><p>${abstract.substring(0, 250)}...</p><button>Roast This Paper</button>`;
+                    paperElement.querySelector('button').onclick = () => {
+                        selectedPaper = paperData;
+                        selectedPaperTitle.textContent = paperData.title;
+                        logEvent(`Paper selected for roasting: "${paperData.title}"`, 'ACTION');
+                        showView('generate-view');
+                    };
+                    papersList.appendChild(paperElement);
+                }
+            } catch (error) {
+                logEvent(`Failed to fetch papers: ${error.message}`, 'ERROR');
+                papersList.innerHTML = `<p style="color:#e57373;">Failed to fetch papers. Check the Event Log for details.</p>`;
+            } finally {
+                loader.classList.add('hidden');
+                fetchPapersBtn.disabled = false;
+            }
+        }
+
+        // 4. STEP 2: GENERATING THE SCRIPT WITH GEMINI
+        const SCRIPT_GENERATOR_PROMPT = `
+        **ROLES & PERSONAS:**
+        - **Dr. Anya Sharma:** The "straight man." She is a sharp, witty, and knowledgeable scientist. She understands the paper's jargon and explains the premise, but with a deeply sarcastic and cynical edge. Her humor is dry and intellectual.
+        - **Ben Carter:** The "chaos agent." He is an everyman who is constantly baffled by the science. He makes wild, relatable analogies, asks the "dumb" questions everyone is thinking, and generally brings high energy and incredulity. His humor is broad and observational.
+        **TASK:** Write a humorous, conversational podcast script of about 600-800 words where Dr. Anya Sharma and Ben Carter roast the provided medical research paper.
+        **CONTEXT:** The show is called "Lab Laughs." Anya introduces the paper, and Ben reacts. They go back and forth, dissecting the paper's premise, methods, and useless conclusion in a conversational style.
+        **INPUT PAPER DETAILS:**
+        - **Title:** "{TITLE}"
+        - **Abstract:** "{ABSTRACT}"
+        **OUTPUT FORMAT:**
+        You MUST reply with only a valid JSON array of objects. Each object represents one turn of dialogue and must have two keys: "speaker" (either "Anya" or "Ben") and "line" (the dialogue for that speaker). Do not include any text before or after the JSON array.
+        `;
+
+        async function handleGenerateScript() {
+            if (!selectedPaper) return;
+            logEvent('Generating script with Gemini API...', 'ACTION');
+            scriptLoader.classList.remove('hidden');
+            generateScriptBtn.disabled = true;
+            scriptOutput.value = '';
+
+            const filledPrompt = SCRIPT_GENERATOR_PROMPT
+                .replace('{TITLE}', selectedPaper.title)
+                .replace('{ABSTRACT}', selectedPaper.abstract);
+
+            try {
+                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`;
+                const response = await fetch(geminiApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] })
+                });
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    throw new Error(`Gemini API Error: ${response.status} ${response.statusText}. Response: ${errorBody}`);
+                }
+                
+                const data = await response.json();
+                const rawText = data.candidates[0].content.parts[0].text;
+                logEvent('Received response from Gemini.');
+                // Clean the raw text to ensure it's valid JSON
+                const cleanJsonText = rawText.trim().replace(/^```json/, '').replace(/```$/, '').trim();
+                conversationalScript = JSON.parse(cleanJsonText);
+                const formattedForDisplay = conversationalScript.map(turn => `${turn.speaker}: ${turn.line}`).join('\n\n');
+                scriptOutput.value = formattedForDisplay;
+                logEvent(`Script generated successfully with ${conversationalScript.length} lines.`, 'SUCCESS');
+                showView('listen-view');
+            } catch (error) {
+                logEvent(`Failed to generate script: ${error.message}`, 'ERROR');
+                showView('generate-view');
+            } finally {
+                scriptLoader.classList.add('hidden');
+                generateScriptBtn.disabled = false;
+            }
+        }
+
+        // 5. STEP 3: CONVERSATIONAL TEXT-TO-SPEECH
+        function playConversationalScript() {
+            if (conversationalScript.length === 0 || !('speechSynthesis' in window)) {
+                logEvent('Could not start playback. No script is loaded or synthesis is not supported.', 'ERROR');
+                return;
+            }
+            logEvent('Starting podcast playback...', 'ACTION');
+            window.speechSynthesis.cancel();
+            speakTurn(0);
+        }
+
+        function speakTurn(turnIndex) {
+            if (turnIndex >= conversationalScript.length) {
+                logEvent('Playback finished.', 'SUCCESS');
+                return;
+            }
+            const turn = conversationalScript[turnIndex];
+            const utterance = new SpeechSynthesisUtterance(turn.line);
+            const selectedVoiceName = turn.speaker === 'Anya' 
+                ? anyaVoiceSelect.selectedOptions[0].getAttribute('data-name')
+                : benVoiceSelect.selectedOptions[0].getAttribute('data-name');
+            
+            utterance.voice = voices.find(v => v.name === selectedVoiceName);
+            utterance.rate = 0.95;
+            utterance.pitch = turn.speaker === 'Anya' ? 1.0 : 1.1;
+            
+            utterance.onstart = () => {
+                logEvent(`Speaking line ${turnIndex + 1}/${conversationalScript.length} (Speaker: ${turn.speaker})`);
+            };
+            utterance.onend = () => speakTurn(turnIndex + 1);
+            utterance.onerror = e => logEvent(`Speech synthesis error: ${e.error}`, 'ERROR');
+            
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
