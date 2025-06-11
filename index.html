@@ -314,8 +314,8 @@
                 anyaVoiceSelect.appendChild(opt.cloneNode(true));
                 benVoiceSelect.appendChild(opt.cloneNode(true));
             });
-            const anyaIdx = voices.findIndex(v => v.name === 'Google US English' || v.name.includes('Microsoft Ava'));
-            const benIdx = voices.findIndex(v => v.name === 'Microsoft David - English (United States)' || v.name.includes('Microsoft Andrew'));
+            const anyaIdx = voices.findIndex(v => v.name === 'Google US English' || v.name.includes('Ava'));
+            const benIdx = voices.findIndex(v => v.name === 'Microsoft David - English (United States)' || v.name.includes('Andrew'));
             anyaVoiceSelect.selectedIndex = anyaIdx !== -1 ? anyaIdx : 0;
             benVoiceSelect.selectedIndex = benIdx !== -1 ? benIdx : 1;
             logEvent('Voices loaded and dropdowns populated.', 'SUCCESS');
