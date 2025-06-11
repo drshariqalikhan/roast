@@ -54,12 +54,18 @@
             <h2>Settings</h2>
             <p>Your API key is stored locally in your browser and is never shared.</p>
             <input type="password" id="gemini-key-input" placeholder="Enter your Gemini API Key">
+
+            <!-- *** FIX: The button text and ID are changed for clarity *** -->
+            <button id="validate-key-btn">Validate Key & Load Models</button>
+
             <div id="model-select-container" class="model-selection hidden">
                 <label for="model-selector">Select AI Model:</label>
                 <select id="model-selector"></select>
                 <p id="model-status" class="model-status"></p>
+
+                <!-- *** FIX: A new button to control navigation *** -->
+                <button id="start-app-btn" class="hidden">Start Generating</button>
             </div>
-            <button id="save-key-btn">Save Key & Start</button>
         </div>
         <div id="fetch-view" class="view">
              <h2>Step 1: Find Roast-Worthy Papers</h2>
@@ -69,24 +75,15 @@
              </div>
              <div id="papers-list"></div>
         </div>
+        <!-- Other views are unchanged -->
         <div id="generate-view" class="view">
-             <h2>Step 2: Generate Podcast Script</h2>
-             <p><strong>Selected Paper:</strong> <span id="selected-paper-title"></span></p>
-             <button id="generate-script-btn">Generate Roast Script!</button>
-             <div id="script-loader" class="hidden">The comedy duo is conferring...</div>
-             <textarea id="script-output" readonly placeholder="The generated script will appear here..."></textarea>
+             <h2>Step 2: Generate Podcast Script</h2><p><strong>Selected Paper:</strong> <span id="selected-paper-title"></span></p><button id="generate-script-btn">Generate Roast Script!</button><div id="script-loader" class="hidden">The comedy duo is conferring...</div><textarea id="script-output" readonly placeholder="The generated script will appear here..."></textarea>
         </div>
         <div id="listen-view" class="view">
-             <h2>Step 3: Create and Listen to the Podcast</h2>
-             <div class="voice-selection"><label for="anya-voice-select">Dr. Anya Sharma's Voice:</label><select id="anya-voice-select"></select></div>
-             <div class="voice-selection"><label for="ben-voice-select">Ben Carter's Voice:</label><select id="ben-voice-select"></select></div>
-             <button id="speak-btn">Play Podcast Conversation</button>
-             <button id="stop-btn">Stop Playback</button>
-             <button id="back-to-start-btn">Start Over</button>
+             <h2>Step 3: Create and Listen to the Podcast</h2><div class="voice-selection"><label for="anya-voice-select">Dr. Anya Sharma's Voice:</label><select id="anya-voice-select"></select></div><div class="voice-selection"><label for="ben-voice-select">Ben Carter's Voice:</label><select id="ben-voice-select"></select></div><button id="speak-btn">Play Podcast Conversation</button><button id="stop-btn">Stop Playback</button><button id="back-to-start-btn">Start Over</button>
         </div>
         <div id="log-container">
-             <div id="log-header"><h2>Event Log</h2><button id="clear-log-btn">Clear Log</button></div>
-             <pre id="log-output"></pre>
+             <div id="log-header"><h2>Event Log</h2><button id="clear-log-btn">Clear Log</button></div><pre id="log-output"></pre>
         </div>
     </main>
 
@@ -94,41 +91,47 @@
         // All variables and prompts are the same, no changes here
         const logOutput = document.getElementById('log-output'); function logEvent(message, type = 'INFO') { const timestamp = new Date().toLocaleTimeString(); const logEntry = document.createElement('div'); logEntry.className = `log-entry log-${type}`; logEntry.textContent = `[${timestamp} ${type}] ${message}`; logOutput.appendChild(logEntry); logOutput.scrollTop = logOutput.scrollHeight; switch (type) { case 'ERROR': console.error(`[${type}] ${message}`); break; case 'WARN': console.warn(`[${type}] ${message}`); break; default: console.log(`[${type}] ${message}`); } }
         window.addEventListener('load', () => { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('service-worker.js').then(reg => logEvent('Service Worker registered.', 'SUCCESS')).catch(err => logEvent(`Service Worker registration failed: ${err}`, 'ERROR')); } initializeApp(); });
-        const views = document.querySelectorAll('.view'); const geminiKeyInput = document.getElementById('gemini-key-input'); const saveKeyBtn = document.getElementById('save-key-btn'); const fetchPapersBtn = document.getElementById('fetch-papers-btn'); const papersList = document.getElementById('papers-list'); const selectedPaperTitle = document.getElementById('selected-paper-title'); const generateScriptBtn = document.getElementById('generate-script-btn'); const scriptOutput = document.getElementById('script-output'); const speakBtn = document.getElementById('speak-btn'); const stopBtn = document.getElementById('stop-btn'); const backToStartBtn = document.getElementById('back-to-start-btn'); const loader = document.getElementById('loader'); const loaderMessage = document.getElementById('loader-message'); const scriptLoader = document.getElementById('script-loader'); const anyaVoiceSelect = document.getElementById('anya-voice-select'); const benVoiceSelect = document.getElementById('ben-voice-select'); const clearLogBtn = document.getElementById('clear-log-btn'); const modelSelectContainer = document.getElementById('model-select-container'); const modelSelector = document.getElementById('model-selector'); const modelStatus = document.getElementById('model-status');
+        
+        const views = document.querySelectorAll('.view');
+        const geminiKeyInput = document.getElementById('gemini-key-input');
+        // *** FIX: Updated variable names for new buttons ***
+        const validateKeyBtn = document.getElementById('validate-key-btn');
+        const startAppBtn = document.getElementById('start-app-btn');
+        
+        const fetchPapersBtn = document.getElementById('fetch-papers-btn'); const papersList = document.getElementById('papers-list'); const selectedPaperTitle = document.getElementById('selected-paper-title'); const generateScriptBtn = document.getElementById('generate-script-btn'); const scriptOutput = document.getElementById('script-output'); const speakBtn = document.getElementById('speak-btn'); const stopBtn = document.getElementById('stop-btn'); const backToStartBtn = document.getElementById('back-to-start-btn'); const loader = document.getElementById('loader'); const loaderMessage = document.getElementById('loader-message'); const scriptLoader = document.getElementById('script-loader'); const anyaVoiceSelect = document.getElementById('anya-voice-select'); const benVoiceSelect = document.getElementById('ben-voice-select'); const clearLogBtn = document.getElementById('clear-log-btn'); const modelSelectContainer = document.getElementById('model-select-container'); const modelSelector = document.getElementById('model-selector'); const modelStatus = document.getElementById('model-status');
+        
         let geminiApiKey = ''; let selectedPaper = null; let conversationalScript = []; let voices = []; let selectedModel = '';
         const GEMINI_API_URL_BASE_FOR_LISTING = 'https://generativelanguage.googleapis.com/v1beta/models'; const GEMINI_API_URL_BASE_FOR_GENERATION = 'https://generativelanguage.googleapis.com/v1beta/';
         const PAPER_SCREENER_PROMPT = `...`; const SCRIPT_GENERATOR_PROMPT = `...`; // Prompts are unchanged
 
         async function initializeApp() {
             logEvent('Initializing application...');
+            showView('settings-view'); // Always start on the settings view
+
             geminiApiKey = localStorage.getItem('geminiApiKey');
             if (geminiApiKey) {
-                logEvent(`Gemini API key found. Fetching models...`, 'SUCCESS');
-                try {
-                    await fetchAndPopulateModels(geminiApiKey);
-                    // *** FIX 1: Wrap navigation in a setTimeout ***
-                    logEvent('Initialization complete. Navigating to main view...');
-                    setTimeout(() => {
-                        showView('fetch-view');
-                    }, 500); // 0.5 second delay
-                } catch (error) {
-                    logEvent('Initialization failed while fetching models. Staying on settings page.', 'ERROR');
-                    // Stay on settings view if models fail to load
-                    showView('settings-view');
-                }
+                logEvent(`Found stored API key. Please validate it to continue.`, 'INFO');
+                geminiKeyInput.value = geminiApiKey;
             } else {
-                logEvent('No API key found. Showing settings.', 'WARN');
-                modelSelectContainer.classList.add('hidden');
-                showView('settings-view');
+                logEvent('No API key found. Please enter one.', 'WARN');
             }
+
             loadVoices();
             if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = loadVoices;
-            saveKeyBtn.addEventListener('click', saveKeyAndStart);
+
+            // *** FIX: Event Listeners for the new button flow ***
+            validateKeyBtn.addEventListener('click', handleValidateKey);
+            startAppBtn.addEventListener('click', () => {
+                logEvent('Starting app...');
+                showView('fetch-view');
+            });
+            
+            // Other listeners remain
             fetchPapersBtn.addEventListener('click', handleFetchAndScreenPapers);
             generateScriptBtn.addEventListener('click', handleGenerateScript);
             speakBtn.addEventListener('click', playConversationalScript);
             stopBtn.addEventListener('click', () => { window.speechSynthesis.cancel(); logEvent('Playback stopped by user.', 'ACTION'); });
-            backToStartBtn.addEventListener('click', () => { logEvent('Resetting application state.', 'ACTION'); selectedPaper = null; scriptOutput.value = ''; papersList.innerHTML = ''; conversationalScript = []; showView('fetch-view'); });
+            backToStartBtn.addEventListener('click', () => { logEvent('Resetting application state.', 'ACTION'); selectedPaper = null; scriptOutput.value = ''; papersList.innerHTML = ''; conversationalScript = []; showView('settings-view'); });
             clearLogBtn.addEventListener('click', () => { logOutput.innerHTML = ''; logEvent('Log cleared.'); });
             modelSelector.addEventListener('change', handleModelChange);
         }
@@ -139,40 +142,48 @@
             logEvent(`Navigated to view: ${viewId}.`);
         }
 
-        async function saveKeyAndStart() {
+        // *** FIX: This function now has a single responsibility: validation. ***
+        async function handleValidateKey() {
             const key = geminiKeyInput.value.trim();
-            if (key) {
-                logEvent(`API Key entered. Saving and fetching models...`, 'ACTION');
-                try {
-                    await fetchAndPopulateModels(key);
-                    // If successful, save the key
-                    localStorage.setItem('geminiApiKey', key);
-                    geminiApiKey = key;
-                    logEvent('Key saved and models loaded successfully.');
+            if (!key) {
+                logEvent('Key input is empty.', 'WARN');
+                return;
+            }
 
-                    // *** FIX 2: Wrap navigation in a setTimeout ***
-                    setTimeout(() => {
-                        showView('fetch-view');
-                    }, 500); // 0.5 second delay
-                } catch (error) {
-                    logEvent('Failed to validate key / fetch models. Please check the key and try again.', 'ERROR');
-                    // Do not save key or navigate if there's an error.
-                }
-            } else {
-                logEvent('Save attempt failed: key was empty.', 'WARN');
+            logEvent('Validating key and fetching models...', 'ACTION');
+            validateKeyBtn.disabled = true;
+            validateKeyBtn.textContent = 'Validating...';
+
+            try {
+                await fetchAndPopulateModels(key);
+
+                // If successful, save the key and update the UI
+                localStorage.setItem('geminiApiKey', key);
+                geminiApiKey = key;
+                
+                logEvent('Key is valid and models loaded successfully!', 'SUCCESS');
+                geminiKeyInput.disabled = true;
+                validateKeyBtn.classList.add('hidden'); // Hide the validate button
+                startAppBtn.classList.remove('hidden'); // Show the start button
+
+            } catch (error) {
+                logEvent(`Validation failed: ${error.message}. Please check the key.`, 'ERROR');
+                // Re-enable the button so the user can try again
+                validateKeyBtn.disabled = false;
+                validateKeyBtn.textContent = 'Validate Key & Load Models';
             }
         }
         
         async function fetchAndPopulateModels(apiKey) {
-            logEvent("Fetching available AI models...", 'ACTION');
+            logEvent("Fetching available AI models...", 'INFO');
             modelStatus.textContent = "Fetching models...";
-            modelSelectContainer.classList.remove('hidden');
+            modelSelectContainer.classList.remove('hidden'); // Make the container visible
 
             try {
                 const response = await fetch(`${GEMINI_API_URL_BASE_FOR_LISTING}?key=${apiKey}`);
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`API Error fetching models: ${errorData.error?.message || response.statusText}`);
+                    throw new Error(`API responded with ${response.status}: ${errorData.error?.message || 'Unknown Error'}`);
                 }
                 const data = await response.json();
                 modelSelector.innerHTML = ''; 
@@ -184,7 +195,7 @@
                 );
 
                 if (usableModels.length === 0) {
-                     throw new Error("No suitable Gemini or Gemma models found.");
+                     throw new Error("No suitable Gemini or Gemma models found for this key.");
                 }
 
                 usableModels.forEach(model => {
@@ -207,14 +218,12 @@
                 if (!selected) modelSelector.selectedIndex = 0;
                 
                 handleModelChange();
-                logEvent(`Found ${usableModels.length} models. Dropdown populated.`, 'SUCCESS');
+                logEvent(`Found ${usableModels.length} models. Please select one and click Start.`, 'SUCCESS');
 
             } catch (error) {
-                logEvent(`Error fetching models: ${error.message}`, 'ERROR');
-                modelStatus.textContent = "Error loading models. Check key or permissions.";
+                // Hide the dropdown again on failure
                 modelSelectContainer.classList.add('hidden');
-                // IMPORTANT: Re-throw the error so the calling function knows it failed.
-                throw error;
+                throw error; // Re-throw the error for the calling function to handle
             }
         }
 
