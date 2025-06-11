@@ -46,7 +46,7 @@
             background-color: #555;
             cursor: not-allowed;
         }
-        input, textarea, select { /* --- MODIFIED: Added select --- */
+        input, textarea, select {
             width: 100%; 
             padding: 10px; 
             border-radius: 5px; 
@@ -68,7 +68,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .hidden { display: none !important; }
 
-        /* --- ADDED: Model Selection Styling --- */
+        /* Model Selection Styling */
         .model-selection {
             margin-top: 1rem;
             padding-top: 1rem;
@@ -124,7 +124,7 @@
         .voice-selection label {
             font-weight: bold;
         }
-        .voice-selection select { /* --- MODIFIED: More specific selector --- */
+        .voice-selection select {
             padding: 8px;
             border-radius: 5px;
             background-color: #333;
@@ -157,7 +157,6 @@
             <p>Your API key is stored locally in your browser and is never shared.</p>
             <input type="password" id="gemini-key-input" placeholder="Enter your Gemini API Key">
 
-            <!-- --- ADDED: Model Selection UI --- -->
             <div id="model-select-container" class="model-selection hidden">
                 <label for="model-selector">Select AI Model:</label>
                 <select id="model-selector"></select>
@@ -239,7 +238,6 @@
         const anyaVoiceSelect = document.getElementById('anya-voice-select');
         const benVoiceSelect = document.getElementById('ben-voice-select');
         const clearLogBtn = document.getElementById('clear-log-btn');
-        // --- ADDED: DOM elements for model selection ---
         const modelSelectContainer = document.getElementById('model-select-container');
         const modelSelector = document.getElementById('model-selector');
         const modelStatus = document.getElementById('model-status');
@@ -248,9 +246,8 @@
         let selectedPaper = null;
         let conversationalScript = [];
         let voices = [];
-        let selectedModel = ''; // --- ADDED: Global variable for the selected model
+        let selectedModel = '';
 
-        // --- MODIFIED: Split URL base for listing and generation ---
         const GEMINI_API_URL_BASE_FOR_LISTING = 'https://generativelanguage.googleapis.com/v1beta/models';
         const GEMINI_API_URL_BASE_FOR_GENERATION = 'https://generativelanguage.googleapis.com/v1beta/';
 
@@ -286,11 +283,11 @@
             geminiApiKey = localStorage.getItem('geminiApiKey');
             if (geminiApiKey) {
                 logEvent(`Gemini API key found. Fetching models...`, 'SUCCESS');
-                fetchAndPopulateModels(geminiApiKey); // --- MODIFIED: Fetch models on load
-                showView('fetch-view');
+                fetchAndPopulateModels(geminiApiKey);
+                // The line that was here is now inside fetchAndPopulateModels
             } else {
                 logEvent('No API key found. Showing settings.', 'WARN');
-                modelSelectContainer.classList.add('hidden'); // Ensure model select is hidden
+                modelSelectContainer.classList.add('hidden');
                 showView('settings-view');
             }
             loadVoices();
@@ -312,7 +309,7 @@
                 showView('fetch-view');
             });
             clearLogBtn.addEventListener('click', () => { logOutput.innerHTML = ''; logEvent('Log cleared.'); });
-            modelSelector.addEventListener('change', handleModelChange); // --- ADDED: Event listener for model dropdown
+            modelSelector.addEventListener('change', handleModelChange);
         }
         
         function showView(viewId) {
@@ -327,14 +324,13 @@
                 localStorage.setItem('geminiApiKey', key);
                 geminiApiKey = key;
                 logEvent(`API Key saved. Fetching available models...`, 'SUCCESS');
-                fetchAndPopulateModels(key); // --- MODIFIED: Fetch models after saving key
-                showView('fetch-view');
+                fetchAndPopulateModels(key);
+                // *** FIX *** The `showView('fetch-view');` line was removed from here.
             } else {
                 logEvent('Save attempt failed: key was empty.', 'WARN');
             }
         }
         
-        // --- ADDED: Function to fetch and display available models ---
         async function fetchAndPopulateModels(apiKey) {
             logEvent("Fetching available AI models...", 'ACTION');
             modelStatus.textContent = "Fetching models...";
@@ -347,7 +343,7 @@
                     throw new Error(`API Error fetching models: ${errorData.error?.message || response.statusText}`);
                 }
                 const data = await response.json();
-                modelSelector.innerHTML = ''; // Clear previous options
+                modelSelector.innerHTML = ''; 
 
                 const usableModels = data.models.filter(model =>
                     model.supportedGenerationMethods &&
@@ -366,7 +362,6 @@
                     modelSelector.appendChild(option);
                 });
                 
-                // Set the default selection
                 const preferredModels = ["models/gemini-1.5-flash-latest", "models/gemma-2-9b-it", "models/gemini-1.5-pro-latest"];
                 let selected = false;
                 for (const preferred of preferredModels) {
@@ -379,8 +374,12 @@
                 }
                 if (!selected) modelSelector.selectedIndex = 0;
                 
-                handleModelChange(); // Trigger change handler to set initial model
+                handleModelChange();
                 logEvent(`Found ${usableModels.length} models. Dropdown populated.`, 'SUCCESS');
+                
+                // *** FIX *** The navigation line was moved here.
+                // This ensures the view only changes *after* models are loaded successfully.
+                showView('fetch-view'); 
 
             } catch (error) {
                 logEvent(`Error fetching models: ${error.message}`, 'ERROR');
@@ -389,7 +388,6 @@
             }
         }
 
-        // --- ADDED: Handler for when the user changes the model selection ---
         function handleModelChange() {
             if (modelSelector.value) {
                 selectedModel = modelSelector.value;
@@ -399,7 +397,7 @@
             }
         }
 
-        function loadVoices() { /* ... no changes ... */
+        function loadVoices() {
             voices = window.speechSynthesis.getVoices();
             if (voices.length === 0) {
                  logEvent('Speech synthesis voices not yet available. Waiting for onvoiceschanged.', 'WARN');
@@ -426,7 +424,6 @@
                 .replace('{TITLE}', paper.title)
                 .replace('{ABSTRACT}', paper.abstract);
             try {
-                // --- MODIFIED: Use dynamic model URL ---
                 const geminiApiUrl = `${GEMINI_API_URL_BASE_FOR_GENERATION}${selectedModel}:generateContent?key=${geminiApiKey}`;
                 const response = await fetch(geminiApiUrl, {
                     method: 'POST',
@@ -450,7 +447,7 @@
             }
         }
         
-        async function handleFetchAndScreenPapers() { /* ... no changes needed inside this function ... */
+        async function handleFetchAndScreenPapers() {
             logEvent('Starting paper fetch and screen process...', 'ACTION');
             loader.classList.remove('hidden');
             fetchPapersBtn.disabled = true;
@@ -563,7 +560,6 @@
             scriptOutput.value = '';
             const filledPrompt = SCRIPT_GENERATOR_PROMPT.replace('{TITLE}', selectedPaper.title).replace('{ABSTRACT}', selectedPaper.abstract);
             try {
-                // --- MODIFIED: Use dynamic model URL ---
                 const geminiApiUrl = `${GEMINI_API_URL_BASE_FOR_GENERATION}${selectedModel}:generateContent?key=${geminiApiKey}`;
                 const response = await fetch(geminiApiUrl, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] })
@@ -588,7 +584,7 @@
                 generateScriptBtn.disabled = false;
             }
         }
-        function playConversationalScript() { /* ... no changes ... */
+        function playConversationalScript() {
             if (conversationalScript.length === 0 || !('speechSynthesis' in window)) {
                  logEvent('Cannot play script: No script loaded or speech synthesis not supported.', 'ERROR');
                 return;
@@ -597,7 +593,7 @@
             window.speechSynthesis.cancel();
             speakTurn(0);
         }
-        function speakTurn(turnIndex) { /* ... no changes ... */
+        function speakTurn(turnIndex) {
             if (turnIndex >= conversationalScript.length) { logEvent('Playback finished.', 'SUCCESS'); return; }
             const turn = conversationalScript[turnIndex];
             const utterance = new SpeechSynthesisUtterance(turn.line);
