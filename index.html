@@ -15,7 +15,7 @@
     </script>
 
     <style>
-        /* Most CSS is the same */
+        /* All CSS is the same */
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #1e1e1e; color: #f0f0f0; margin: 0; }
         header { background-color: #333; padding: 1rem; text-align: center; border-bottom: 2px solid #ff6347; }
         main { padding: 1rem; max-width: 800px; margin: auto; }
@@ -33,28 +33,9 @@
         #log-container { margin-top: 2.5rem; border-top: 2px solid #555; padding-top: 1rem; }
         #log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
         #log-output { background-color: #111; border: 1px solid #444; border-radius: 5px; padding: 10px; height: 200px; overflow-y: scroll; white-space: pre-wrap; font-size: 0.85rem; color: #ccc; }
-        
-        /* *** ADDITION: Styles for the new drag-and-drop zone *** */
-        #drop-zone {
-            border: 3px dashed #555;
-            border-radius: 10px;
-            padding: 40px 20px;
-            text-align: center;
-            color: #aaa;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-        #drop-zone.drag-over {
-            border-color: #ff6347;
-            background-color: #333;
-        }
-        .or-separator {
-            text-align: center;
-            font-weight: bold;
-            color: #888;
-            margin: -0.5rem 0 0.5rem 0;
-        }
+        #drop-zone { border: 3px dashed #555; border-radius: 10px; padding: 40px 20px; text-align: center; color: #aaa; font-size: 1.2rem; margin-bottom: 1rem; transition: border-color 0.3s, background-color 0.3s; }
+        #drop-zone.drag-over { border-color: #ff6347; background-color: #333; }
+        .or-separator { text-align: center; font-weight: bold; color: #888; margin: -0.5rem 0 0.5rem 0; }
     </style>
 </head>
 <body>
@@ -65,7 +46,6 @@
             <p>Your API key is stored locally in your browser and is never shared.</p>
             <input type="password" id="gemini-key-input" placeholder="Enter your Gemini API Key">
             <button id="validate-key-btn">Validate Key & Load Models</button>
-
             <div id="model-select-container" class="model-selection hidden">
                 <label for="model-selector">Select AI Model:</label>
                 <select id="model-selector"></select>
@@ -74,22 +54,16 @@
             </div>
         </div>
 
-        <!-- *** MODIFICATION: This view now includes a drag-and-drop zone *** -->
         <div id="fetch-view" class="view">
              <h2>Step 1: Provide a Paper to Roast</h2>
              <label for="paper-title-input">Paper Title (Required):</label>
              <input type="text" id="paper-title-input" placeholder="Enter the full title of the paper">
-             
              <div id="drop-zone">Drag & Drop PDF Here</div>
              <p class="or-separator">OR</p>
-             
              <label for="pdf-url-input">Provide PDF URL:</label>
              <input type="url" id="pdf-url-input" placeholder="https://example.com/path/to/paper.pdf">
              <button id="analyze-pdf-btn">Analyze Paper from URL</button>
-             
-             <div id="loader" class="hidden">
-                 <p id="loader-message">Loading...</p>
-             </div>
+             <div id="loader" class="hidden"><p id="loader-message">Loading...</p></div>
         </div>
 
         <div id="generate-view" class="view">
@@ -114,7 +88,6 @@
     </main>
 
     <script>
-        // All variables and prompts are the same, no changes here
         const logOutput = document.getElementById('log-output'); function logEvent(message, type = 'INFO') { const timestamp = new Date().toLocaleTimeString(); const logEntry = document.createElement('div'); logEntry.className = `log-entry log-${type}`; logEntry.textContent = `[${timestamp} ${type}] ${message}`; logOutput.appendChild(logEntry); logOutput.scrollTop = logOutput.scrollHeight; switch (type) { case 'ERROR': console.error(`[${type}] ${message}`); break; case 'WARN': console.warn(`[${type}] ${message}`); break; default: console.log(`[${type}] ${message}`); } }
         window.addEventListener('load', () => { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('service-worker.js').then(reg => logEvent('Service Worker registered.', 'SUCCESS')).catch(err => logEvent(`Service Worker registration failed: ${err}`, 'ERROR')); } initializeApp(); });
         
@@ -122,14 +95,10 @@
         const geminiKeyInput = document.getElementById('gemini-key-input');
         const validateKeyBtn = document.getElementById('validate-key-btn');
         const startAppBtn = document.getElementById('start-app-btn');
-        
-        // Element references for PDF submission
         const analyzePdfBtn = document.getElementById('analyze-pdf-btn');
         const paperTitleInput = document.getElementById('paper-title-input');
         const pdfUrlInput = document.getElementById('pdf-url-input');
-        // *** ADDITION: New element reference for the drop zone ***
         const dropZone = document.getElementById('drop-zone');
-
         const selectedPaperTitle = document.getElementById('selected-paper-title');
         const generateScriptBtn = document.getElementById('generate-script-btn');
         const scriptOutput = document.getElementById('script-output');
@@ -149,41 +118,21 @@
         let geminiApiKey = ''; let selectedPaper = null; let conversationalScript = []; let voices = []; let selectedModel = '';
         const GEMINI_API_URL_BASE_FOR_GENERATION = 'https://generativelanguage.googleapis.com/v1beta/';
         const GEMINI_API_URL_BASE_FOR_LISTING = 'https://generativelanguage.googleapis.com/v1beta/models';
-        const SCRIPT_GENERATOR_PROMPT = `You are a comedy writer for a podcast called "Medical Malarkey"...`; // Prompt is unchanged
+        const SCRIPT_GENERATOR_PROMPT = `You are a comedy writer for a podcast called "Medical Malarkey" hosted by Dr. Anya Sharma, a sharp and witty medical professional, and Ben Carter, an enthusiastic and slightly naive layman. Their dynamic is playful roasting. Anya explains the science, and Ben reacts with humor and silly analogies. Your task is to write a short, funny podcast script (5-7 lines of dialogue) based on the following scientific paper. The script should roast the paper's premise or findings in a lighthearted way. RULES: - The output MUST be a valid JSON array of objects, where each object has a "speaker" ("Anya" or "Ben") and a "line". - Do not include any text outside the JSON array. - Anya's lines should be scientifically grounded but funny. - Ben's lines should be pure comedy, often misunderstanding the science for comedic effect. - The tone should be amusing and satirical, not genuinely critical or mean. PAPER TITLE: "{TITLE}" PAPER ABSTRACT: "{ABSTRACT}" Generate the script now.`;
 
         async function initializeApp() {
             logEvent('Initializing application...');
             showView('settings-view');
-
             geminiApiKey = localStorage.getItem('geminiApiKey');
-            if (geminiApiKey) {
-                logEvent(`Found stored API key. Please validate it to continue.`, 'INFO');
-                geminiKeyInput.value = geminiApiKey;
-            } else {
-                logEvent('No API key found. Please enter one.', 'WARN');
-            }
-
+            if (geminiApiKey) { logEvent(`Found stored API key. Please validate it to continue.`, 'INFO'); geminiKeyInput.value = geminiApiKey; } else { logEvent('No API key found. Please enter one.', 'WARN'); }
             loadVoices();
             if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = loadVoices;
-
             validateKeyBtn.addEventListener('click', handleValidateKey);
             startAppBtn.addEventListener('click', () => { showView('fetch-view'); });
-            
-            // Event listener for the URL button
-            analyzePdfBtn.addEventListener('click', () => {
-                const url = pdfUrlInput.value.trim();
-                if (url) {
-                    processPdf(url);
-                } else {
-                    logEvent("PDF URL input is empty.", "WARN");
-                }
-            });
-            
-            // *** ADDITION: Event listeners for the drag-and-drop zone ***
+            analyzePdfBtn.addEventListener('click', () => { const url = pdfUrlInput.value.trim(); if (url) { processPdf(url); } else { logEvent("PDF URL input is empty.", "WARN"); } });
             dropZone.addEventListener('dragover', handleDragOver);
             dropZone.addEventListener('dragleave', handleDragLeave);
             dropZone.addEventListener('drop', handleDrop);
-            
             generateScriptBtn.addEventListener('click', handleGenerateScript);
             speakBtn.addEventListener('click', playConversationalScript);
             stopBtn.addEventListener('click', () => { window.speechSynthesis.cancel(); logEvent('Playback stopped by user.', 'ACTION'); });
@@ -193,94 +142,59 @@
         }
         
         function showView(viewId) { views.forEach(view => view.classList.remove('active')); document.getElementById(viewId).classList.add('active'); logEvent(`Navigated to view: ${viewId}.`); }
-        async function handleValidateKey() { /* Unchanged */ const key = geminiKeyInput.value.trim(); if (!key) { logEvent('Key input is empty.', 'WARN'); return; } logEvent('Validating key and fetching models...', 'ACTION'); validateKeyBtn.disabled = true; validateKeyBtn.textContent = 'Validating...'; try { await fetchAndPopulateModels(key); localStorage.setItem('geminiApiKey', key); geminiApiKey = key; logEvent('Key is valid and models loaded successfully!', 'SUCCESS'); geminiKeyInput.disabled = true; validateKeyBtn.classList.add('hidden'); startAppBtn.classList.remove('hidden'); } catch (error) { logEvent(`Validation failed: ${error.message}. Please check the key.`, 'ERROR'); validateKeyBtn.disabled = false; validateKeyBtn.textContent = 'Validate Key & Load Models'; } }
-        async function fetchAndPopulateModels(apiKey) { /* Unchanged */ logEvent("Fetching available AI models...", 'INFO'); modelStatus.textContent = "Fetching models..."; modelSelectContainer.classList.remove('hidden'); try { const response = await fetch(`${GEMINI_API_URL_BASE_FOR_LISTING}?key=${apiKey}`); if (!response.ok) { const errorData = await response.json(); throw new Error(`API responded with ${response.status}: ${errorData.error?.message || 'Unknown Error'}`); } const data = await response.json(); modelSelector.innerHTML = ''; const usableModels = data.models.filter(model => model.supportedGenerationMethods && model.supportedGenerationMethods.includes("generateContent") && (model.name.includes("gemini") || model.name.includes("gemma"))); if (usableModels.length === 0) { throw new Error("No suitable Gemini or Gemma models found for this key."); } usableModels.forEach(model => { const option = document.createElement('option'); option.value = model.name; option.textContent = model.displayName; modelSelector.appendChild(option); }); const preferredModels = ["models/gemini-1.5-flash-latest", "models/gemma-2-9b-it", "models/gemini-1.5-pro-latest"]; let selected = false; for (const preferred of preferredModels) { const foundOption = Array.from(modelSelector.options).find(opt => opt.value === preferred); if (foundOption) { modelSelector.value = preferred; selected = true; break; } } if (!selected) modelSelector.selectedIndex = 0; handleModelChange(); logEvent(`Found ${usableModels.length} models. Please select one and click Start.`, 'SUCCESS'); } catch (error) { modelSelectContainer.classList.add('hidden'); throw error; } }
-        function handleModelChange() { /* Unchanged */ if (modelSelector.value) { selectedModel = modelSelector.value; const displayName = modelSelector.options[modelSelector.selectedIndex].text; modelStatus.textContent = `Using: ${displayName}`; logEvent(`AI Model changed to: ${selectedModel}`, 'ACTION'); } }
-        function loadVoices() { /* Unchanged, keeps preferred voices */ voices = window.speechSynthesis.getVoices(); if (voices.length === 0) { logEvent('Speech synthesis voices not yet available.', 'WARN'); return; } anyaVoiceSelect.innerHTML = ''; benVoiceSelect.innerHTML = ''; voices.filter(v => v.lang.startsWith('en')).forEach(v => { const opt = document.createElement('option'); opt.textContent = `${v.name} (${v.lang})`; opt.setAttribute('data-name', v.name); anyaVoiceSelect.appendChild(opt.cloneNode(true)); benVoiceSelect.appendChild(opt.cloneNode(true)); }); const anyaIdx = voices.findIndex(v => v.name.includes('Microsoft Jenny Online (Natural) - English (United States)')); const benIdx = voices.findIndex(v => v.name.includes('Microsoft Guy Online (Natural) - English (United States)')); anyaVoiceSelect.selectedIndex = anyaIdx !== -1 ? anyaIdx : voices.findIndex(v => v.name.includes('Aria')); benVoiceSelect.selectedIndex = benIdx !== -1 ? benIdx : voices.findIndex(v => v.name.includes('David')); logEvent('Voices loaded and dropdowns populated.', 'SUCCESS'); }
-
-        // *** ADDITION: Drag-and-drop event handlers ***
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropZone.classList.add('drag-over');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropZone.classList.remove('drag-over');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropZone.classList.remove('drag-over');
+        async function handleValidateKey() { const key = geminiKeyInput.value.trim(); if (!key) { logEvent('Key input is empty.', 'WARN'); return; } logEvent('Validating key and fetching models...', 'ACTION'); validateKeyBtn.disabled = true; validateKeyBtn.textContent = 'Validating...'; try { await fetchAndPopulateModels(key); localStorage.setItem('geminiApiKey', key); geminiApiKey = key; logEvent('Key is valid and models loaded successfully!', 'SUCCESS'); geminiKeyInput.disabled = true; validateKeyBtn.classList.add('hidden'); startAppBtn.classList.remove('hidden'); } catch (error) { logEvent(`Validation failed: ${error.message}. Please check the key.`, 'ERROR'); validateKeyBtn.disabled = false; validateKeyBtn.textContent = 'Validate Key & Load Models'; } }
+        async function fetchAndPopulateModels(apiKey) { logEvent("Fetching available AI models...", 'INFO'); modelStatus.textContent = "Fetching models..."; modelSelectContainer.classList.remove('hidden'); try { const response = await fetch(`${GEMINI_API_URL_BASE_FOR_LISTING}?key=${apiKey}`); if (!response.ok) { const errorData = await response.json(); throw new Error(`API responded with ${response.status}: ${errorData.error?.message || 'Unknown Error'}`); } const data = await response.json(); modelSelector.innerHTML = ''; const usableModels = data.models.filter(model => model.supportedGenerationMethods && model.supportedGenerationMethods.includes("generateContent") && (model.name.includes("gemini") || model.name.includes("gemma"))); if (usableModels.length === 0) { throw new Error("No suitable Gemini or Gemma models found for this key."); } usableModels.forEach(model => { const option = document.createElement('option'); option.value = model.name; option.textContent = model.displayName; modelSelector.appendChild(option); }); const preferredModels = ["models/gemini-1.5-flash-latest", "models/gemma-2-9b-it", "models/gemini-1.5-pro-latest"]; let selected = false; for (const preferred of preferredModels) { const foundOption = Array.from(modelSelector.options).find(opt => opt.value === preferred); if (foundOption) { modelSelector.value = preferred; selected = true; break; } } if (!selected) modelSelector.selectedIndex = 0; handleModelChange(); logEvent(`Found ${usableModels.length} models. Please select one and click Start.`, 'SUCCESS'); } catch (error) { modelSelectContainer.classList.add('hidden'); throw error; } }
+        function handleModelChange() { if (modelSelector.value) { selectedModel = modelSelector.value; const displayName = modelSelector.options[modelSelector.selectedIndex].text; modelStatus.textContent = `Using: ${displayName}`; logEvent(`AI Model changed to: ${selectedModel}`, 'ACTION'); } }
+        function loadVoices() { voices = window.speechSynthesis.getVoices(); if (voices.length === 0) { logEvent('Speech synthesis voices not yet available.', 'WARN'); return; } anyaVoiceSelect.innerHTML = ''; benVoiceSelect.innerHTML = ''; voices.filter(v => v.lang.startsWith('en')).forEach(v => { const opt = document.createElement('option'); opt.textContent = `${v.name} (${v.lang})`; opt.setAttribute('data-name', v.name); anyaVoiceSelect.appendChild(opt.cloneNode(true)); benVoiceSelect.appendChild(opt.cloneNode(true)); }); const anyaIdx = voices.findIndex(v => v.name.includes('Microsoft Jenny Online (Natural) - English (United States)')); const benIdx = voices.findIndex(v => v.name.includes('Microsoft Guy Online (Natural) - English (United States)')); anyaVoiceSelect.selectedIndex = anyaIdx !== -1 ? anyaIdx : voices.findIndex(v => v.name.includes('Aria')); benVoiceSelect.selectedIndex = benIdx !== -1 ? benIdx : voices.findIndex(v => v.name.includes('David')); logEvent('Voices loaded and dropdowns populated.', 'SUCCESS'); }
+        function handleDragOver(e) { e.preventDefault(); e.stopPropagation(); dropZone.classList.add('drag-over'); }
+        function handleDragLeave(e) { e.preventDefault(); e.stopPropagation(); dropZone.classList.remove('drag-over'); }
+        function handleDrop(e) { e.preventDefault(); e.stopPropagation(); dropZone.classList.remove('drag-over'); const files = e.dataTransfer.files; if (files.length !== 1) { logEvent("Please drop only one file.", "WARN"); return; } const file = files[0]; if (file.type !== 'application/pdf') { logEvent(`Invalid file type: ${file.type}. Please drop a PDF file.`, "ERROR"); return; } logEvent(`File dropped: ${file.name}`, "INFO"); const reader = new FileReader(); reader.onload = function(event) { const pdfData = event.target.result; processPdf({ data: pdfData }); }; reader.readAsArrayBuffer(file); }
+        async function processPdf(pdfSource) { const title = paperTitleInput.value.trim(); if (!title) { logEvent("Paper Title is required before analyzing a PDF.", "WARN"); return; } logEvent("Starting PDF analysis...", "ACTION"); loader.classList.remove('hidden'); analyzePdfBtn.disabled = true; dropZone.style.pointerEvents = 'none'; try { loaderMessage.textContent = 'Downloading and parsing PDF...'; const pdf = await pdfjsLib.getDocument(pdfSource).promise; logEvent(`PDF loaded with ${pdf.numPages} pages. Extracting text.`, 'INFO'); let fullText = ''; for (let i = 1; i <= pdf.numPages; i++) { const page = await pdf.getPage(i); const textContent = await page.getTextContent(); fullText += textContent.items.map(item => item.str).join(' '); } const abstract = fullText.split(/\s+/).slice(0, 400).join(' '); logEvent(`Extracted ${abstract.split(' ').length} words to use as an abstract.`, 'SUCCESS'); selectedPaper = { title, abstract }; selectedPaperTitle.textContent = title; showView('generate-view'); } catch (error) { logEvent(`Failed to process PDF: ${error.message}. If using a URL, this can happen due to website security (CORS). Try downloading the PDF and dropping it instead.`, "ERROR"); } finally { loader.classList.add('hidden'); analyzePdfBtn.disabled = false; dropZone.style.pointerEvents = 'auto'; } }
+        
+        async function handleGenerateScript() {
+            if (!selectedPaper) return;
+            logEvent(`Generating script with ${selectedModel}...`, 'ACTION');
+            scriptLoader.classList.remove('hidden');
+            generateScriptBtn.disabled = true;
+            scriptOutput.value = '';
+            const filledPrompt = SCRIPT_GENERATOR_PROMPT.replace('{TITLE}', selectedPaper.title).replace('{ABSTRACT}', selectedPaper.abstract);
             
-            const files = e.dataTransfer.files;
-            if (files.length !== 1) {
-                logEvent("Please drop only one file.", "WARN");
-                return;
-            }
-            const file = files[0];
-            if (file.type !== 'application/pdf') {
-                logEvent(`Invalid file type: ${file.type}. Please drop a PDF file.`, "ERROR");
-                return;
-            }
-
-            logEvent(`File dropped: ${file.name}`, "INFO");
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const pdfData = event.target.result; // This is an ArrayBuffer
-                processPdf({ data: pdfData }); // Pass as an object for processing
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-        // *** REFACTOR: Unified PDF processing function for both URL and file drop ***
-        async function processPdf(pdfSource) {
-            const title = paperTitleInput.value.trim();
-            if (!title) {
-                logEvent("Paper Title is required before analyzing a PDF.", "WARN");
-                return;
-            }
-            
-            logEvent("Starting PDF analysis...", "ACTION");
-            loader.classList.remove('hidden');
-            analyzePdfBtn.disabled = true;
-            dropZone.style.pointerEvents = 'none'; // Disable drop while processing
-
             try {
-                loaderMessage.textContent = 'Downloading and parsing PDF...';
-                // pdfjsLib.getDocument can accept a URL string or an object with the data buffer
-                const pdf = await pdfjsLib.getDocument(pdfSource).promise;
-                logEvent(`PDF loaded with ${pdf.numPages} pages. Extracting text.`, 'INFO');
+                const geminiApiUrl = `${GEMINI_API_URL_BASE_FOR_GENERATION}${selectedModel}:generateContent?key=${geminiApiKey}`;
+                const response = await fetch(geminiApiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] }) });
+                if (!response.ok) { const errBody = await response.text(); throw new Error(`API Error: ${response.status}. ${errBody}`); }
+                const data = await response.json();
+                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0].text) { throw new Error("Invalid response structure from Gemini script generation API."); }
+                
+                const rawText = data.candidates[0].content.parts[0].text;
+                logEvent('Received response from Gemini.');
 
-                let fullText = '';
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const textContent = await page.getTextContent();
-                    fullText += textContent.items.map(item => item.str).join(' ');
+                // *** FIX: Robustly find and extract the JSON array from the raw response ***
+                const startIndex = rawText.indexOf('[');
+                const endIndex = rawText.lastIndexOf(']');
+
+                if (startIndex === -1 || endIndex === -1 || endIndex < startIndex) {
+                    throw new Error("Could not find a valid JSON array in the AI's response. The AI returned: " + rawText);
                 }
 
-                const abstract = fullText.split(/\s+/).slice(0, 400).join(' ');
-                logEvent(`Extracted ${abstract.split(' ').length} words to use as an abstract.`, 'SUCCESS');
+                const jsonString = rawText.substring(startIndex, endIndex + 1);
                 
-                selectedPaper = { title, abstract };
-                selectedPaperTitle.textContent = title;
-                showView('generate-view');
+                conversationalScript = JSON.parse(jsonString);
+                scriptOutput.value = conversationalScript.map(turn => `${turn.speaker}: ${turn.line}`).join('\n\n');
+                logEvent(`Script generated successfully with ${conversationalScript.length} lines.`, 'SUCCESS');
+                showView('listen-view');
 
             } catch (error) {
-                logEvent(`Failed to process PDF: ${error.message}. If using a URL, this can happen due to website security (CORS). Try downloading the PDF and dropping it instead.`, "ERROR");
+                logEvent(`Failed to generate script: ${error.message}`, 'ERROR');
+                showView('generate-view');
             } finally {
-                loader.classList.add('hidden');
-                analyzePdfBtn.disabled = false;
-                dropZone.style.pointerEvents = 'auto'; // Re-enable drop
+                scriptLoader.classList.add('hidden');
+                generateScriptBtn.disabled = false;
             }
         }
-        
-        async function handleGenerateScript() { /* Unchanged */ if (!selectedPaper) return; logEvent(`Generating script with ${selectedModel}...`, 'ACTION'); scriptLoader.classList.remove('hidden'); generateScriptBtn.disabled = true; scriptOutput.value = ''; const filledPrompt = SCRIPT_GENERATOR_PROMPT.replace('{TITLE}', selectedPaper.title).replace('{ABSTRACT}', selectedPaper.abstract); try { const geminiApiUrl = `${GEMINI_API_URL_BASE_FOR_GENERATION}${selectedModel}:generateContent?key=${geminiApiKey}`; const response = await fetch(geminiApiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] }) }); if (!response.ok) { const errBody = await response.text(); throw new Error(`API Error: ${response.status}. ${errBody}`); } const data = await response.json(); if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0].text) { throw new Error("Invalid response structure from Gemini script generation API."); } const rawText = data.candidates[0].content.parts[0].text; logEvent('Received response from Gemini.'); const cleanJsonText = rawText.trim().replace(/^```json/, '').replace(/```$/, '').trim(); conversationalScript = JSON.parse(cleanJsonText); scriptOutput.value = conversationalScript.map(turn => `${turn.speaker}: ${turn.line}`).join('\n\n'); logEvent(`Script generated successfully with ${conversationalScript.length} lines.`, 'SUCCESS'); showView('listen-view'); } catch (error) { logEvent(`Failed to generate script: ${error.message}`, 'ERROR'); showView('generate-view'); } finally { scriptLoader.classList.add('hidden'); generateScriptBtn.disabled = false; } }
-        function playConversationalScript() { /* Unchanged */ if (conversationalScript.length === 0 || !('speechSynthesis' in window)) { logEvent('Cannot play script: No script or speech synthesis not supported.', 'ERROR'); return; } logEvent('Starting podcast playback...', 'ACTION'); window.speechSynthesis.cancel(); speakTurn(0); }
-        function speakTurn(turnIndex) { /* Unchanged */ if (turnIndex >= conversationalScript.length) { logEvent('Playback finished.', 'SUCCESS'); return; } const turn = conversationalScript[turnIndex]; const utterance = new SpeechSynthesisUtterance(turn.line); const selectedVoiceName = turn.speaker === 'Anya' ? anyaVoiceSelect.selectedOptions[0].getAttribute('data-name') : benVoiceSelect.selectedOptions[0].getAttribute('data-name'); utterance.voice = voices.find(v => v.name === selectedVoiceName); if (!utterance.voice && voices.length > 0) { logEvent(`Voice "${selectedVoiceName}" not found. Using default.`, 'WARN'); utterance.voice = voices[0]; } utterance.rate = 0.95; utterance.pitch = turn.speaker === 'Anya' ? 1.0 : 1.1; utterance.onstart = () => logEvent(`Speaking line ${turnIndex + 1}/${conversationalScript.length} (Speaker: ${turn.speaker})`); utterance.onend = () => speakTurn(turnIndex + 1); utterance.onerror = e => logEvent(`Speech synthesis error: ${e.error}`, 'ERROR'); window.speechSynthesis.speak(utterance); }
+
+        function playConversationalScript() { if (conversationalScript.length === 0 || !('speechSynthesis' in window)) { logEvent('Cannot play script: No script or speech synthesis not supported.', 'ERROR'); return; } logEvent('Starting podcast playback...', 'ACTION'); window.speechSynthesis.cancel(); speakTurn(0); }
+        function speakTurn(turnIndex) { if (turnIndex >= conversationalScript.length) { logEvent('Playback finished.', 'SUCCESS'); return; } const turn = conversationalScript[turnIndex]; const utterance = new SpeechSynthesisUtterance(turn.line); const selectedVoiceName = turn.speaker === 'Anya' ? anyaVoiceSelect.selectedOptions[0].getAttribute('data-name') : benVoiceSelect.selectedOptions[0].getAttribute('data-name'); utterance.voice = voices.find(v => v.name === selectedVoiceName); if (!utterance.voice && voices.length > 0) { logEvent(`Voice "${selectedVoiceName}" not found. Using default.`, 'WARN'); utterance.voice = voices[0]; } utterance.rate = 0.95; utterance.pitch = turn.speaker === 'Anya' ? 1.0 : 1.1; utterance.onstart = () => logEvent(`Speaking line ${turnIndex + 1}/${conversationalScript.length} (Speaker: ${turn.speaker})`); utterance.onend = () => speakTurn(turnIndex + 1); utterance.onerror = e => logEvent(`Speech synthesis error: ${e.error}`, 'ERROR'); window.speechSynthesis.speak(utterance); }
     </script>
 </body>
 </html>
