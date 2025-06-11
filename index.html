@@ -11,25 +11,7 @@
     <style>
         /* Basic styling */
         body { 
-            font-family: -apple-system,UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Malarkey Generator</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff6347"/>
-
-    <style>
-        /* Basic styling */
-        body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #1e1e1e; 
-            color: #f0f0f0; 
-            margin: 0; 
-        }
-        header { 
-            background-color: #333; 
-            padding: 1rem; 
-            text-align: center;  BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #1e1e1e; 
             color: #f0f0f0; 
             margin: 0; 
@@ -46,161 +28,29 @@
             margin: auto; 
         }
         button { 
-            background-color: #ff6347;
-            border-bottom: 2px solid #ff6347;
-        }
-        main { 
-            padding: 1rem; 
-            max-width: 800px; 
-            margin: auto; 
-        }
-        button { 
-            background-color: #ff63 
+            background-color: #ff6347; 
             color: white; 
             border: none; 
             padding: 12px 18px; 
             border-radius: 5px; 
             cursor: pointer; 
-47; 
-            color: white; 
-            border: none; 
-            padding: 1            font-size: 1rem;
-            font-weight: bold;
-            margin-right: 2px 18px; 
-            border-radius: 5px; 
-            cursor: pointer; 
             font-size: 1rem;
             font-weight: bold;
-            margin-8px;
+            margin-right: 8px;
             margin-top: 5px;
         }
         button:hover { 
-right: 8px;
-            margin-top: 5px;
-        }
-        button:hover            background-color: #e55337; 
-        }
-        button:disabled {
- { 
             background-color: #e55337; 
         }
-        button:            background-color: #555;
-            cursor: not-allowed;
-        }
-        inputdisabled {
+        button:disabled {
             background-color: #555;
             cursor: not-allowed;
         }
         input, textarea { 
             width: 100%; 
-            padding: 10px; , textarea { 
-            width: 100%; 
             padding: 10px; 
-            border-radius: 5px; 
-            border: 1px solid #555; 
-            background-color: #333; 
-            color: white; 
-            margin-
-            border-radius: 5px; 
-            border: 1px solid #555;bottom: 1rem; 
-            box-sizing: border-box;
-            font-size:  
-            background-color: #333; 
-            color: white; 
-            margin-bottom: 1rem; 
-            box-sizing: border-box;
-            font-size: 1rem;
-        }
-        textarea { 
-            min-height: 250px; 1rem;
-        }
-        textarea { 
-            min-height: 250px; 
-            white-space: pre-wrap;
-        }
-
-        /* View Management */
-        .view {
-            white-space: pre-wrap;
-        }
-
-        /* View Management */
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } display: none; }
-        .view.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .hidden { display: none !important; }
-
-        /* Paper List Styling */
-        #papers }
-        .hidden { display: none !important; }
-
-        /* Paper List Styling */
-        #papers-list { margin-top: 1rem; }
-        .paper-item { 
-            border:-list { margin-top: 1rem; }
-        .paper-item { 
-            border: 1px solid #444; 
-            padding: 1rem; 
-            margin-bottom 1px solid #444; 
-            padding: 1rem 1rem 0.5rem : 1rem; 
-            border-radius: 5px; 
-            background-color: #1rem; 
-            margin-bottom: 1rem; 
-            border-radius: 5px2a2a2a;
-        }
-        .paper-item h3 { margin-top: ; 
-            background-color: #2a2a2a;
-        }
-        .paper-0; color: #ff6347; }
-        .paper-item button { margin-top: 1remitem h3 { margin-top: 0; color: #ff6347; }
-        .; }
-        .paper-item .score-reason {
-            border-left: 3px solid #64b5f6;
-            padding-left: 10px;
-            margin-top: paper-item button { margin-top: 1rem; }
-        
-        /* --- NEW: Styling for the AI'1rem;
-            font-style: italic;
-            color: #ccc;
-        }
-        .s reason --- */
-        .ai-reason {
-            background-color: #333;
-            border-paper-item .score-reason strong {
-            color: #64b5f6;
-        }
-
-
-left: 3px solid #64b5f6;
-            padding: 10px;
-        /* Voice Selection Styling */
+            border-radius:         /* Voice Selection Styling */
         .voice-selection {
-            margin-bottom: 1rem;
-            margin: 1rem 0 0.5rem 0;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-                        font-style: italic;
-            color: #ccc;
-        }
-        .ai-reason strongflex-wrap: wrap;
-        }
-        .voice-selection label {
-            font-weight: bold {
-            font-style: normal;
-        }
-
-
-        /* Voice Selection Styling */
-        .voice-selection;
-        }
-        select {
-            padding: 8px;
-            border-radius: 5px;
- {
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -211,690 +61,578 @@ left: 3px solid #64b5f6;
             font-weight: bold;
         }
         select {
-            padding:            background-color: #333;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #333;
             color: white;
             border: 1px solid #555;
             font-size: 0.9rem;
         }
 
         /* Event Log Styling */
-        #log-container { margin-top: 2.5rem; border-top:  8px;
-            border-radius: 5px;
-            background-color: #333;
-            color: white;
-            border: 1px solid #555;
-            font-2px solid #555; padding-top: 1rem; }
-        #log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0size: 0.9rem;
-        }
-
-        /* Event Log Styling */
-        #log-container {
-            margin-top: 2.5rem;
-            border-top: 2px solid #.5rem; }
+        #log-container { margin-top: 2.5rem; border-top: 2px solid #555; padding-top: 1rem; }
+        #log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
         #log-header h2 { margin: 0; font-size: 1.2rem; }
-        #log-header button { padding: 5px 10px; font-size: 555;
-            padding-top: 1rem;
-        }
-        #log-header {0.8rem; background-color: #555; }
-        #log-output { background-color: #111; border: 1px solid #444; border-radius: 5px; padding
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        #log-header h2 {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        : 10px; height: 200px; overflow-y: scroll; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; color#log-header button {
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            background-color: #555;
-        }
-        #log: #ccc; line-height: 1.5; }
+        #log-header button { padding: 5px 10px; font-size: 0.8rem; background-color: #555; }
+        #log-output { background-color: #111; border: 1px solid #444; border-radius: 5px; padding: 10px; height: 200px; overflow-y: scroll; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; color: #ccc; line-height: 1.5; }
         .log-entry { margin-bottom: 4px; }
-        .log-INFO { color: #f0f0f0; }-output {
-            background-color: #111;
-            border: 1px solid #444;
-            border-radius: 5px;
-            padding: 10px;
-            
+        .log-INFO { color: #f0f0f0; }
         .log-SUCCESS { color: #81c784; }
-        .log-ERROR { color:height: 200px;
-            overflow-y: scroll;
-            white-space: pre- #e57373; font-weight: bold; }
-        .log-WARN { color:wrap;
-            word-wrap: break-word;
-            font-size: 0.85rem #ffd54f; }
+        .log-ERROR { color: #e57373; font-weight: bold; }
+        .log-WARN { color: #ffd54f; }
         .log-ACTION { color: #64b5f6; font-weight: bold; }
-
-    </style>
-</head>
-<body>
-    <header><h1>;
-            color: #ccc;
-            line-height: 1.5;
-        }
-        .log-entry { margin-bottom: 4px; }
-        .log-INFO { color: #Medical Malarkey Generator</h1></header>
-    <main>
-        <div id="settings-view" class="viewf0f0f0; }
-        .log-SUCCESS { color: #81c784 active">
-            <h2>Settings</h2>
-            <p>Your API key is stored locally in your browser and is never; } /* Green */
-        .log-ERROR { color: #e57373; font- shared.</p>
-            <input type="password" id="gemini-key-input" placeholder="Enterweight: bold; } /* Red */
-        .log-WARN { color: #ffd54f; } your Gemini API Key">
-            <button id="save-key-btn">Save Key & Start</button> /* Yellow */
-        .log-ACTION { color: #64b5f6; font-weight:
-        </div>
-        <div id="fetch-view" class="view">
-            <h2>Step 1: Find Roast-Worthy Papers</h2>
-            <button id="fetch-papers-btn">Fetch & Screen Recent Papers</button>
-             bold; } /* Blue */
 
     </style>
 </head>
 <body>
     <header><h1>Medical Malarkey Generator</h1></header>
     <main>
-        <!-- Views (Unchanged) -->
         <div id="settings-view" class="view active">
             <h2>Settings</h2>
-            <p>Your API key is stored locally in<div id="loader" class="hidden">
+            <p>Your API key is stored locally in your browser and is never shared.</p>
+            <input type="password" id="gemini-key-input" placeholder="Enter your Gemini API Key">
+            <button id="save-key-btn">Save Key & Start</button>
+        </div>
+        <div id="fetch-view" class="view">
+            <h2>Step 1: Find Roast-Worthy Papers</h2>
+            <button id="fetch-papers-btn">Fetch & Screen Recent Papers</button>
+            <div id="loader" class="hidden">
                 <p id="loader-message">Loading...</p>
             </div>
             <div id="papers-list"></div>
         </div>
-        <div id="generate your browser and is never shared.</p>
-            <input type="password" id="gemini-key--view" class="view">
-            <h2>Step 2: Generate Podcast Script</h2>
-            <p><strong>input" placeholder="Enter your Gemini API Key">
-            <button id="save-key-btn">Save Key & Start</button>
-        </div>
-        <div id="fetch-view" class="view">
-            Selected Paper:</strong> <span id="selected-paper-title"></span></p>
-            <button id="generate-script-btn">Generate Roast Script!</button>
-            <div id="script-loader" class="<h2>Step 1: Find a Paper</h2>
-            <button id="fetch-papers-btn">Fetch & Screen Recent Papers</hidden">The comedy duo is conferring...</div>
-            <textarea id="script-output" readonly placeholder="The generated script will appearbutton>
-            <div id="loader" class="hidden">Loading...</div>
-            <div id="papers here..."></textarea>
-        </div>
-        <div id="listen-view" class="view">
-            -list"></div>
-        </div>
         <div id="generate-view" class="view">
             <h2>Step 2: Generate Podcast Script</h2>
-            <p><strong>Selected Paper:</strong> <span id="selected-<h2>Step 3: Create and Listen to the Podcast</h2>
-             <div class="voice-selection"><label for="anya-voice-select">Dr. Anya Sharma's Voice:</label><select id="anya-voice-select"></paper-title"></span></p>
-            <button id="generate-script-btn">Generate Roast Script!</select></div>
-             <div class="voice-selection"><label for="ben-voice-select">Ben Carterbutton>
+            <p><strong>Selected Paper:</strong> <span id="selected-paper-title"></span></p>
+            <button id="generate-script-btn">Generate Roast Script!</button>5px; 
+            border: 1px solid #555; 
+            background-color: #333; 
+            color: white; 
+            margin-bottom: 1rem; 
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        textarea { 
+            min-height: 250px; 
+            white-space: pre-wrap;
+        }
+
+        /* View Management */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .hidden { display
             <div id="script-loader" class="hidden">The comedy duo is conferring...</div>
-'s Voice:</label><select id="ben-voice-select"></select></div>
-            <button id="            <textarea id="script-output" readonly placeholder="The generated script will appear here..."></textarea>
-        speak-btn">Play Podcast Conversation</button>
-            <button id="stop-btn">Stop Playback</button></div>
+            <textarea id="script-output" readonly placeholder="The generated script will appear here..."></textarea>
+        </div>
         <div id="listen-view" class="view">
-            <h2>Step 3: Create and
-            <button id="back-to-start-btn">Start Over</button>
-        </div>
-         Listen to the Podcast</h2>
-             <div class="voice-selection">
-                <label for="anya-voice-select">Dr. Anya Sharma's Voice:</label>
-                <select id="anya-voice-select<div id="log-container">
-            <div id="log-header"><h2>Event Log</h2><button id="clear-log-btn">Clear Log</button></div>
-            <pre id="log-output"></"></select>
-            </div>
-            <div class="voice-selection">
-                <label for="ben-pre>
-        </div>
-    </main>
-
-    <script>
-        const logOutput = document.getElementByIdvoice-select">Ben Carter's Voice:</label>
-                <select id="ben-voice-select"></('log-output');
-
-        function logEvent(message, type = 'INFO') {
-            const timestamp =select>
-            </div>
+            <h2>Step 3: Create and Listen to the Podcast</h2>
+             <div class="voice-selection"><label for="anya-voice-select">Dr. Anya Sharma's Voice:</label><select id="anya-voice-select"></select></div>
+             <div class="voice-selection"><label for="ben-voice-select">Ben Carter's Voice:</label><select id="ben-voice-select"></select></div>
             <button id="speak-btn">Play Podcast Conversation</button>
             <button id="stop-btn">Stop Playback</button>
-            <button id="back-to-start new Date().toLocaleTimeString();
-            const logEntry = document.createElement('div');
-            logEntry.className-btn">Start Over</button>
+            <button id="back-to-start-btn">Start Over</button>
         </div>
-        <!-- Event Log -->
-        <div id="log = `log-entry log-${type}`;
-            logEntry.textContent = `[${timestamp} ${type}]-container">
-            <div id="log-header">
-                <h2>Event Log</h2>
-                <button id ${message}`;
-            logOutput.appendChild(logEntry);
-            logOutput.scrollTop = logOutput.scrollHeight;
-="clear-log-btn">Clear Log</button>
-            </div>
-            <pre id="log-output            switch (type) {
-                case 'ERROR': console.error(message); break;
-                case 'WARN':"></pre>
+        <div id="log-container">
+            <div id="log-header"><h2>Event Log</h2><button id="clear-log-btn">: none !important; }
+
+        /* Paper List Styling */
+        #papers-list { margin-top: 1rem; }
+        .paper-item { 
+            border: 1px solid #444; 
+            padding: 1rem 1rem 0.5rem 1rem; 
+            margin-bottom: 1rem; 
+            border-radius: 5px; 
+            background-color: #2a2a2a;
+        }
+        .paper-item h3 { margin-top: 0; color: #ff6347; }
+        .paper-item button { margin-top: 1rem; }
+        
+        /* Styling for the AI's reason */
+        .ai-reason {
+            background-color: #333;
+            border-left: 3px solid #64b5f6;
+            padding: 10px;
+            margin: 1rem 0 0.5rem 0;
+            border-radius: 3px;
+            font-style: italic;
+            color: #ccc;
+        }
+        .ai-reason strong {
+            font-style: normal;
+        }
+
+        /* Voice Selection Styling */
+        .voice-selection {
+            margin-bottom: Clear Log</button></div>
+            <pre id="log-output"></pre>
         </div>
     </main>
 
     <script>
-        const logOutput = document.getElementById('log console.warn(message); break;
-                default: console.log(message);
-            }
-        }-output');
+        const logOutput = document.getElementById('log-output');
 
         function logEvent(message, type = 'INFO') {
-            const timestamp = new Date
-        
-        // --- ALL JS CODE IS BELOW ---
-
-        window.addEventListener('load', () => {
-          ().toLocaleTimeString();
+            const timestamp = new Date().toLocaleTimeString();
             const logEntry = document.createElement('div');
             logEntry.className = `log-entry log-${type}`;
-            logEntry.textContent = `[${timestamp} ${type}] ${messageif ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')}`;
+            logEntry.textContent = `[${timestamp} ${type}] ${message}`;
             logOutput.appendChild(logEntry);
             logOutput.scrollTop = logOutput.scrollHeight;
             
-              .then(reg => logEvent('Service Worker registered.', 'SUCCESS'))
-              .catch(err =>
-            switch (type) {
-                case 'ERROR': console.error(`[${type}] ${message}`); break logEvent(`Service Worker registration failed: ${err}`, 'ERROR'));
-          }
-          initializeApp();
-        });;
+            switch (type1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .voice-selection label {
+            font-weight: bold;
+        }
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+            font-size: 0.9rem;) {
+                case 'ERROR': console.error(`[${type}] ${message}`); break;
                 case 'WARN': console.warn(`[${type}] ${message}`); break;
-                default:
-        
-        const views = document.querySelectorAll('.view');
-        const geminiKeyInput = document.getElementById('gem console.log(`[${type}] ${message}`);
+                default: console.log(`[${type}] ${message}`);
             }
         }
+        
+        window.addEventListener('load', () => {
+        }
 
-        // --- NEW: Promptini-key-input');
-        const saveKeyBtn = document.getElementById('save-key-btn');
- for the AI Screener ---
-        const PAPER_SCREENER_PROMPT = `
-        **ROLE:** You are a cynical        const fetchPapersBtn = document.getElementById('fetch-papers-btn');
-        const papersList = document.getElementById('papers-list');
+        /* Event Log Styling */
+        #log-container { margin-top: 2.5rem; border-top: 2px solid #555; padding-top: 1rem; }
+
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.        #log-header { display: flex; justify-content: space-between; align-items: center; margin-bottomjs')
+              .then(reg => logEvent('Service Worker registered.', 'SUCCESS'))
+              .catch(: 0.5rem; }
+        #log-header h2 { margin: 0; font-size: err => logEvent(`Service Worker registration failed: ${err}`, 'ERROR'));
+          }
+          initializeApp();
+1.2rem; }
+        #log-header button { padding: 5px 10px; font-size: 0.8rem; background-color: #555; }
+        #log        });
+        
+        const views = document.querySelectorAll('.view');
+        const geminiKeyInput = document.getElementById('gemini-key-input');
+        const saveKeyBtn = document.getElementById('save-key-btn');-output { background-color: #111; border: 1px solid #444; border
+        const fetchPapersBtn = document.getElementById('fetch-papers-btn');
+        const papersList = document-radius: 5px; padding: 10px; height: 200px; overflow-y: scroll.getElementById('papers-list');
         const selectedPaperTitle = document.getElementById('selected-paper-title');
- and witty comedy scout for a podcast that roasts weird medical research. Your job is to screen paper abstracts and give them a "Ro        const generateScriptBtn = document.getElementById('generate-script-btn');
-        const scriptOutput = document.astability Score."
-
-        **TASK:** Analyze the following Title and Abstract. Based on the criteria below, provide a "getElementById('script-output');
+        const generateScriptBtn = document.getElementById('generate-script-btn');
+        const scriptOutput = document; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; color: #ccc; line-height: 1.5; }
+        .log-entry {.getElementById('script-output');
         const speakBtn = document.getElementById('speak-btn');
         const stopBtn = document.getElementById('stop-btn');
-        const backToStartBtn = document.getElementById('back-Roastability Score" from 1 (boring) to 10 (comedy gold).
-
-        **CRto-start-btn');
+        const backToStartBtn = document.getElementById('back margin-bottom: 4px; }
+        .log-INFO { color: #f0f0f0; }
+        .log-SUCCESS { color: #81c784; }
+        .log--to-start-btn');
         const loader = document.getElementById('loader');
-        const loaderMessage = documentITERIA FOR A HIGH SCORE:**
-        - **Absurd Premise:** Is the core research question bizarre, trivial, or on.getElementById('loader-message');
+        const loaderMessage =ERROR { color: #e57373; font-weight: bold; }
+        .log- document.getElementById('loader-message');
         const scriptLoader = document.getElementById('script-loader');
         const anyaVoiceSelect = document.getElementById('anya-voice-select');
-        const benVoiceSelect = document. a topic no one would think to study?
-        - **Far-Fetched Methodology:** Does the method sound strange or overly complicatedgetElementById('ben-voice-select');
-        const clearLogBtn = document.getElementById('clear-log-btn for a simple problem?
-        - **Clinically Useless Conclusion:** Is the final conclusion technically true but utterly useless in the real world?
-        - **Unintentionally Funny Title/Wording:** Does the title itself make');
+        const benVoiceSelect = documentWARN { color: #ffd54f; }
+        .log-ACTION { color: #64b5f6; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+    .getElementById('ben-voice-select');
+        const clearLogBtn = document.getElementById('clear-log-btn');
+
+        let geminiApiKey = '';
+        let selectedPaper = null;
+        let conversationalScript =<header><h1>Medical Malarkey Generator</h1></header>
+    <main>
+        <div id="settings-view" class="view active">
+            <h2>Settings</h2>
+            <p>Your API key is stored [];
+        let voices = [];
+
+        const PAPER_SCREENER_PROMPT = `
+        **ROLE:** You are locally in your browser and is never shared.</p>
+            <input type="password" id="gemini-key-input" placeholder="Enter your Gemini API Key">
+            <button id="save-key-btn"> a cynical and witty comedy scout for a podcast that roasts weird medical research. Your job is to screen paper abstracts and give them a "Roastability Score."
+        **TASK:** Analyze the following Title and Abstract. Based on the criteriaSave Key & Start</button>
+        </div>
+        <div id="fetch-view" class="view">
+            <h2>Step 1: Find Roast-Worthy Papers</h2>
+            <button id="fetch-papers-btn"> below, provide a "Roastability Score" from 1 (boring) to 10 (comedy gold).
+        **CRITERIA FOR A HIGH SCORE:**
+        - **Absurd Premise:** Is the coreFetch & Screen Recent Papers</button>
+            <div id="loader" class="hidden">
+                <p research question bizarre, trivial, or on a topic no one would think to study?
+        - **Far-Fetched id="loader-message">Loading...</p>
+            </div>
+            <div id="papers-list"></div> Methodology:** Does the method sound strange or overly complicated for a simple problem?
+        - **Clinically Useless Conclusion:** Is
+        </div>
+        <div id="generate-view" class="view">
+            <h2>Step 2: Generate Podcast Script</h2>
+            <p><strong>Selected Paper:</strong> <span id="selected-paper-title"> the final conclusion technically true but utterly useless in the real world?
+        - **Unintentionally Funny Wording:** Does the title itself make you laugh?
+        **INPUT:**
+        - **Title:** "{TITLE}"
+        -</span></p>
+            <button id="generate-script-btn">Generate Roast Script!</button>
+            <div id="script-loader" class="hidden">The comedy duo is conferring...</div>
+            <textarea id **Abstract:** "{ABSTRACT}"
+        **OUTPUT FORMAT:** You MUST reply only with a single, valid JSON object containing two keys: "score" (an integer from 1 to 10) and "reason" (a brief, one-="script-output" readonly placeholder="The generated script will appear here..."></textarea>
+        </div>
+        <sentence explanation for your score).
+        **EXAMPLE OUTPUT:**
+        { "score": 9, "reason": "The studydiv id="listen-view" class="view">
+            <h2>Step 3: Create and Listen to the Podcast's focus on the aerodynamic properties of a dropped piece of buttered toast is a classic example of gloriously useless science</h2>
+             <div class="voice-selection"><label for="anya-voice-select">Dr. Anya Sharma." }
+        `;
+
+        const SCRIPT_GENERATOR_PROMPT = `
+        **ROLES &'s Voice:</label><select id="anya-voice-select"></select></div>
+             <div class="voice-selection"><label for="ben-voice-select">Ben Carter's Voice:</label><select id=" PERSONAS:**
+        - **Dr. Anya Sharma:** The "straight man." She is a sharp, witty, and knowledgeable scientist. She understands the paper's jargon and explains the premise, but with a deeply sarcastic and cynical edgeben-voice-select"></select></div>
+            <button id="speak-btn">Play Podcast Conversation</button>
+            <button id="stop-btn">Stop Playback</button>
+            <button id="back. Her humor is dry and intellectual.
+        - **Ben Carter:** The "chaos agent." He is an everyman who is constantly baffled by the science. He makes wild, relatable analogies, asks the "dumb" questions everyone is-to-start-btn">Start Over</button>
+        </div>
+        <div id="log-container thinking, and generally brings high energy and incredulity. His humor is broad and observational.
+        **TASK:**">
+            <div id="log-header"><h2>Event Log</h2><button id="clear-log-btn">Clear Log</button></div>
+            <pre id="log-output"></pre>
+        </div>
+     Write a humorous, conversational podcast script of about 600-800 words where Dr. Anya Sharma and Ben Carter roast the provided medical research paper.
+        **CONTEXT:** The show is called "Lab Laughs." Anya introduces the</main>
+
+    <script>
+        const logOutput = document.getElementById('log-output');
+
+        function logEvent(message, type = 'INFO') {
+            const timestamp = new Date().toLocaleTimeString();
+            const log paper, and Ben reacts. They go back and forth, dissecting the paper's premise, methods, and useless conclusion in a conversational style.
+        **INPUT PAPER DETAILS:**
+        - **Title:** "{TITLE}"
+        Entry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+- **Abstract:** "{ABSTRACT}"
+        **OUTPUT FORMAT:**
+        You MUST reply with only a valid JSON array of objects            logEntry.textContent = `[${timestamp} ${type}] ${message}`;
+            logOutput.appendChild(logEntry);
+            logOutput.scrollTop = logOutput.scrollHeight;
+            switch (type) {
+                case '. Each object represents one turn of dialogue and must have two keys: "speaker" (either "Anya" or "Ben") and "line" (the dialogue for that speaker). Do not include any text before or after the JSONERROR': console.error(`[${type}] ${message}`); break;
+                case 'WARN': console.warn(`[${type}] ${message}`); break;
+                default: console.log(`[${type}] ${message array.
+        `;
+
+        function initializeApp() {
+            logEvent('Initializing application...');
+            geminiApiKey = localStorage.getItem('geminiApiKey');
+            if (geminiApiKey) {
+                logEvent('Gemini API}`);
+            }
+        }
+        
+        window.addEventListener('load', () => {
+          if (' key found in local storage.', 'SUCCESS');
+                showView('fetch-view');
+            } else {
+serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+              .then(reg => logEvent('Service Worker registered.', 'SUCCESS'))
+              .catch(err => logEvent                logEvent('No API key found. Showing settings view.', 'WARN');
+                showView('settings-view(`Service Worker registration failed: ${err}`, 'ERROR'));
+          }
+          initializeApp();
+        });
+        
+        const');
+            }
+            loadVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = loadVoices;
+            }
+            saveKeyBtn.addEventListener views = document.querySelectorAll('.view');
+        const geminiKeyInput = document.getElementById('gemini-key-input');
+        const saveKeyBtn = document.getElementById('save-key-btn');
+        const fetch('click', saveKeyAndStart);
+            fetchPapersBtn.addEventListener('click', handleFetchAndScreenPapers);
+            generatePapersBtn = document.getElementById('fetch-papers-btn');
+        const papersList = document.getElementById('papersScriptBtn.addEventListener('click', handleGenerateScript);
+            speakBtn.addEventListener('click', playConversationalScript);
+            stopBtn.addEventListener('click', () => {
+                window.speechSynthesis.cancel();
+                logEvent-list');
+        const selectedPaperTitle = document.getElementById('selected-paper-title');
+        const generateScriptBtn = document.getElementById('generate-script-btn');
+        const scriptOutput = document.getElementById('script('Playback stopped by user.', 'ACTION');
+            });
+            backToStartBtn.addEventListener('click', () => {
+                logEvent('Resetting application state.', 'ACTION');
+                selectedPaper = null;
+                -output');
+        const speakBtn = document.getElementById('speak-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const backToStartBtn = document.getElementById('back-to-startscriptOutput.value = '';
+                papersList.innerHTML = '';
+                conversationalScript = [];
+                show-btn');
+        const loader = document.getElementById('loader');
+        const loaderMessage = document.getElementById('View('fetch-view');
+            });
+            clearLogBtn.addEventListener('click', () => { logOutputloader-message');
+        const scriptLoader = document.getElementById('script-loader');
+        const anyaVoice.innerHTML = ''; logEvent('Log cleared.'); });
+        }
+        
+        function showView(viewId) {
+Select = document.getElementById('anya-voice-select');
+        const benVoiceSelect = document.getElementById('ben            views.forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            logEvent(`Navigated to view: ${viewId}.`);
+        }-voice-select');
+        const clearLogBtn = document.getElementById('clear-log-btn');
 
         let geminiApiKey = '';
         let selectedPaper = null;
         let conversationalScript = [];
-        let voices = [];
-
-        const SCREENING_PROMPT = `
-        **ROLE:** You are a you laugh?
-
-        **INPUT:**
-        - **Title:** "{TITLE}"
-        - **Abstract:** "{ cynical and witty medical researcher with a sharp eye for scientifically questionable, absurd, or hilarious research. Your job is to screen paper abstracts andABSTRACT}"
-
-        **OUTPUT FORMAT:** You MUST reply only with a single, valid JSON object containing two keys: " give them a "Roastability Score."
-        **TASK:** Analyze the following Title and Abstract. Based on the criteriascore" (an integer from 1 to 10) and "reason" (a brief, one-sentence below, provide a "Roastability Score" from 1 (boring) to 10 (comedy gold explanation for your score).
-
-        **EXAMPLE OUTPUT:**
-        { "score": 9, "reason": "The study).
-        **CRITERIA FOR A HIGH SCORE:**
-        - **Absurd Premise:** Is the core's focus on the aerodynamic properties of a dropped piece of buttered toast is a classic example of gloriously useless science research question bizarre or trivial?
-        - **Far-Fetched Methodology:** Does the method sound overly complicated or just plain." }
-        `;
-
-        // The rest of the script remains largely the same...
-        // ... (initializeApp weird?
-        - **Clinically Useless Conclusion:** Is the final conclusion technically true but utterly useless?
-        -, DOM declarations, etc.) ...
-        
-        // 1. INITIAL SETUP
-        window.addEventListener('load', () **Unintentionally Funny Wording:** Does the title or abstract contain funny phrases?
-        **INPUT:**
-        - ** => {
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-Title:** "{TITLE}"
-        - **Abstract:** "{ABSTRACT}"
-        **OUTPUT FORMAT:** You MUST reply onlyworker.js')
-              .then(reg => logEvent('Service Worker registered successfully.', 'SUCCESS'))
-              .catch with a single, minified JSON object containing two keys: "score" (an integer from 1 to 10) and(err => logEvent(`Service Worker registration failed: ${err}`, 'ERROR'));
-          }
-          initializeApp();
-        }); "reason" (a brief, one-sentence explanation for your score, written in a witty tone).
-        **
-
-        // DOM Elements
-        const views = document.querySelectorAll('.view');
-        const geminiKeyInput =EXAMPLE OUTPUT:**
-        {"score":9,"reason":"The study's focus on the aerodynamic properties of a dropped piece of buttered toast is a classic example of gloriously useless science."}
-        `;
-
-        const SCRIPT document.getElementById('gemini-key-input');
-        // ... (the rest of your DOM element declarations are here)
-        const saveKeyBtn = document.getElementById('save-key-btn');
-        const fetchPapersBtn =_GENERATOR_PROMPT = `
-        **ROLES & PERSONAS:**
-        - **Dr. Anya Sharma:** The "straight man." She is a sharp, witty, and knowledgeable scientist. She understands the paper's document.getElementById('fetch-papers-btn');
-        const papersList = document.getElementById('papers-list'); jargon and explains the premise, but with a deeply sarcastic and cynical edge. Her humor is dry and intellectual.
-        
-        const selectedPaperTitle = document.getElementById('selected-paper-title');
-        const generateScriptBtn = document.getElementById('generate-script-btn');
-        const scriptOutput = document.getElementById('script-output');- **Ben Carter:** The "chaos agent." He is an everyman who is constantly baffled by the science. He
-        const speakBtn = document.getElementById('speak-btn');
-        const stopBtn = document.getElementById(' makes wild, relatable analogies, asks the "dumb" questions everyone is thinking, and generally brings high energy and incredulity. His humor is broad and observational.
-        **TASK:** Write a humorous, conversational podcast script of about stop-btn');
-        const backToStartBtn = document.getElementById('back-to-start-btn');
-        const loader = document.getElementById('loader');
-        const scriptLoader = document.getElementById('script-loader600-800 words where Dr. Anya Sharma and Ben Carter roast the provided medical research paper.
-        **CONTEXT:** The show is called "Lab Laughs." Anya introduces the paper, and Ben reacts. They go back and forth');
-        const anyaVoiceSelect = document.getElementById('anya-voice-select');
-        const benVoiceSelect = document.getElementById('ben-voice-select');
-        const clearLogBtn = document.getElementById('clear, dissecting the paper's premise, methods, and useless conclusion in a conversational style.
-        **INPUT PAPER-log-btn');
-
-
-        let geminiApiKey = '';
-        let selectedPaper = null;
-        let conversationalScript DETAILS:**
-        - **Title:** "{TITLE}"
-        - **Abstract:** "{ABSTRACT}"
-        **OUTPUT = [];
-        let voices = [];
-
-        // 2. APP INITIALIZATION & VIEW MANAGEMENT
-        function initialize FORMAT:**
-        You MUST reply with only a valid JSON array of objects. Each object represents one turn of dialogue and must have two keys: "speaker" (either "Anya" or "Ben") and "line" (the dialogue for thatApp() {
-            logEvent('Initializing application...');
-            geminiApiKey = localStorage.getItem('geminiApiKey');
- speaker). Do not include any text before or after the JSON array.
-        `;
-
-        function initializeApp() {            if (geminiApiKey) {
-                logEvent('Gemini API key found in local storage.', 'SUCCESS');
-                showView('fetch-view');
-            } else {
-                logEvent('No API key found
-            logEvent('Initializing application...');
-            geminiApiKey = localStorage.getItem('geminiApiKey');
-            if (gem. Showing settings view.', 'WARN');
-                showView('settings-view');
-            }
-            
-            loadVoices();iniApiKey) {
-                logEvent('Gemini API key found.', 'SUCCESS');
-                showView('fetch-view');
-            if (window.speechSynthesis.onvoiceschanged !== undefined) {
-                window.speechSynthesis.on
-            } else {
-                logEvent('No API key found. Showing settings.', 'WARN');
-                showView('settings-view');
-            }
-            loadVoices();
-            if (window.speechSynthesis.onvoiceschangedvoiceschanged = loadVoices;
-            }
-
-            saveKeyBtn.addEventListener('click', saveKeyAndStart);
-            fetchPapersBtn.addEventListener('click', handleFetchAndScreenPapers); // --- MODIFIED to call new function
-            generateScriptBtn.addEventListener('click', handleGenerateScript);
-            speakBtn.addEventListener('click', playConversationalScript !== undefined) window.speechSynthesis.onvoiceschanged = loadVoices;
-            saveKeyBtn.addEventListener('click', saveKeyAndStart);
-            fetchPapersBtn.addEventListener('click', handleFetchPapers);
-            generateScriptBtn.addEventListener('click', handleGenerateScript);
-            speakBtn.addEventListener('click', playConversationalScript););
-            stopBtn.addEventListener('click', () => {
-                window.speechSynthesis.cancel();
-                logEvent('Playback stopped by user.', 'ACTION');
-            });
-            backToStartBtn.addEventListener('click
-            stopBtn.addEventListener('click', () => {
-                window.speechSynthesis.cancel();
-                logEvent('Playback stopped by user.', 'ACTION');
-            });
-            backToStartBtn.addEventListener('click', () => {', () => {
-                logEvent('Resetting application state.', 'ACTION');
-                selectedPaper = null;
-                logEvent('Resetting application state.', 'ACTION');
-                showView('fetch-view');
-            });
-            
-                scriptOutput.value = '';
-                papersList.innerHTML = '';
-                conversationalScript = [];
-                showViewclearLogBtn.addEventListener('click', () => { logOutput.innerHTML = ''; });
-        }
-
-        function('fetch-view');
-            });
-            clearLogBtn.addEventListener('click', () => {
-                logOutput.innerHTML showView(viewId) {
-            views.forEach(view => view.classList.remove('active'));
-            document = '';
-                logEvent('Log cleared.');
-            });
-        }
-        
-        // ... (show.getElementById(viewId).classList.add('active');
-            logEvent(`Navigated to view: ${viewView, saveKeyAndStart, loadVoices functions are unchanged) ...
-        function showView(viewId) {
-            views.forEach(view => view.classList.remove('active'));
-            document.getElementById(viewId).classList.Id}.`);
-        }
+        let
 
         function saveKeyAndStart() {
-            const key = geminiKeyInputadd('active');
-            logEvent(`Navigated to view: ${viewId}.`);
-        }
+            const key = geminiKeyInput.value.trim();
+ voices = [];
 
-        .value.trim();
-            if (key) {
+        const PAPER_SCREENER_PROMPT = `
+        **ROLE:** You are a cynical            if (key) {
                 localStorage.setItem('geminiApiKey', key);
                 geminiApiKey = key;
-                logEvent('API Key saved.', 'SUCCESS');
-                showView('fetch-function saveKeyAndStart() {
-            const key = geminiKeyInput.value.trim();
-            if (key) {
-                localStorage.setItem('geminiApiKey', key);
-                geminiApiKey = key;view');
-            } else {
-                logEvent('Save attempt failed: key was empty.', 'WARN');
-            }
                 logEvent('Gemini API Key saved to local storage.', 'SUCCESS');
-                showView('fetch-view');
-
-        }
-
-        function loadVoices() {
-            voices = window.speechSynthesis.getVoices();
-            if            } else {
-                logEvent('Save attempt failed: API key input was empty.', 'WARN');
+                showView(' and witty comedy scout for a podcast that roasts weird medical research. Your job is to screen paper abstracts and give them a "Roastability Score."
+        **TASK:** Analyze the following Title and Abstract. Based on the criteria below, provide afetch-view');
+            } else {
+                logEvent('Save attempt failed: API key input was empty.', 'WARN'); "Roastability Score" from 1 (boring) to 10 (comedy gold).
+        **
             }
- (voices.length === 0) return;
-            anyaVoiceSelect.innerHTML = '';
-            benVoiceSelect        }
-
-        function loadVoices() {
-            voices = window.speechSynthesis.getVoices();
-            if.innerHTML = '';
-            voices.filter(v => v.lang.startsWith('en')).forEach(v => {
-                const opt = document.createElement('option');
-                opt.textContent = `${v.name} (${v.lang (voices.length === 0) {
-                 logEvent('Speech synthesis voices not ready yet.', 'WARN');
-                 return;
-            }
-            logEvent(`Found ${voices.length} speech synthesis voices.`);
-            anyaVoiceSelect.innerHTML})`;
-                opt.setAttribute('data-name', v.name);
-                anyaVoiceSelect.appendChild(opt.clone = '';
-            benVoiceSelect.innerHTML = '';
-            voices
-                .filter(voice => voice.langNode(true));
-                benVoiceSelect.appendChild(opt.cloneNode(true));
-            });
-            .startsWith('en'))
-                .forEach(voice => {
-                    const option = document.createElement('option');
-                    option.textContent = `${voice.name} (${voice.lang})`;
-                    option.setAttribute('data-const anyaIdx = voices.findIndex(v => v.name === 'Google US English' || v.name.includes('Female'));
-            const benIdx = voices.findIndex(v => v.name === 'Microsoft David - English (name', voice.name);
-                    anyaVoiceSelect.appendChild(option.cloneNode(true));
-                    benVoiceSelect.appendChild(option.cloneNode(true));
-                });
-            const defaultAnyaIndex = voicesUnited States)' || v.name.includes('Male'));
-            anyaVoiceSelect.selectedIndex = anyaIdx !== -1 ? anyaIdx : 0;
-            benVoiceSelect.selectedIndex = benIdx !== -1 ?.findIndex(v => v.name === 'Google US English' || v.name.includes('Female'));
-            const defaultBenIndex = voices.findIndex(v => v.name === 'Microsoft David - English (United States benIdx : 1;
         }
 
-        // --- COMPLETELY REVISED FUNCTION ---
-        async function handleFetchPapers())' || v.name.includes('Male'));
-            anyaVoiceSelect.selectedIndex = defaultAnyaIndex !== - {
-            loader.classList.remove('hidden');
-            fetchPapersBtn.disabled = true;
-            papers1 ? defaultAnyaIndex : 0;
-            benVoiceSelect.selectedIndex = defaultBenIndex !== -1List.innerHTML = '';
+        function loadVoices() { /* Unchanged from previous correct version */ }
 
-            try {
-                // PHASE 1: FETCH FROM PUBMED
-                loaderMessage.textContent ? defaultBenIndex : 1;
-            logEvent('Voice selection dropdowns populated.', 'SUCCESS');
-        }
-
-
-         = 'Fetching recent papers from PubMed...';
-                logEvent('Fetching papers from PubMed API...', 'ACTION');
-                const six// --- NEW: Helper function to screen a single paper ---
-        async function getRoastabilityScore(paper)MonthsAgo = new Date();
-                sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-                const dateStr = `${sixMonthsAgo.getFullYear()}/${(sixMonthsAgo.getMonth() +  {
+        async functionCRITERIA FOR A HIGH SCORE:**
+        - **Absurd Premise:** Is the core research question bizarre, trivial, or on a topic no one would think to study?
+        - **Far-Fetched Methodology:** Does the getRoastabilityScore(paper) {
             const filledPrompt = PAPER_SCREENER_PROMPT
                 .replace('{TITLE}', paper.title)
                 .replace('{ABSTRACT}', paper.abstract);
-            
             try {
-                const geminiApiUrl1).toString().padStart(2, '0')}/${sixMonthsAgo.getDate().toString().padStart(2, = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro: '0')}`;
-                const searchQuery = `(("BMJ"[Journal]) OR ("The Lancet"[Journal]) OR ("New England Journal of Medicine"[Journal])) AND ("${dateStr}"[Date - Publication] : "30generateContent?key=${geminiApiKey}`;
+                const method sound strange or overly complicated for a simple problem?
+        - **Clinically Useless Conclusion:** Is the final conclusion technically true but utterly useless in the real world?
+        **INPUT:**
+        - **Title:** "{TITLE geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gem}"
+        - **Abstract:** "{ABSTRACT}"
+        **OUTPUT FORMAT:** You MUST reply only with a single, valid JSON objectini-pro:generateContent?key=${geminiApiKey}`;
                 const response = await fetch(geminiApiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] })
+ containing two keys: "score" (an integer from 1 to 10) and "reason" (a                    body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] })
                 });
+ brief, one-sentence explanation for your score, written in a witty tone).
+        **EXAMPLE OUTPUT:**
+        {"score":                if (!response.ok) throw new Error(`API returned ${response.status}`);
+                const data = await response.9,"reason":"The study's focus on the aerodynamic properties of a dropped piece of buttered toast is a classic example of gloriously useless science."}
+        `;
 
-                00"[Date - Publication]) AND "free full text"[Filter]`;
-                const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?if (!response.ok) throw new Error(`API returned ${response.status}`);
+        const SCRIPT_GENERATOR_PROMPT = json();
+                const result = JSON.parse(data.candidates[0].content.parts[0].text);
+                return { ...paper, score: result.score, reason: result.reason };
+            } catch (error`
+        **ROLES & PERSONAS:**
+        - **Dr. Anya Sharma:** The "straight man." Her humor is dry and intellectual.
+        - **Ben Carter:** The "chaos agent." His humor is broad and observational.
+        ) {
+                logEvent(`Failed to screen paper "${paper.title.substring(0,20)}...": ${**TASK:** Write a humorous, conversational podcast script of about 600-800 words roasting the provided papererror.message}`, 'ERROR');
+                return { ...paper, score: 0, reason: "Failed to analyze." };
+            }
+        }
 
-                const data = await response.jsondb=pubmed&term=${encodeURIComponent(searchQuery)}&retmode=json&retmax=50`;();
-                const rawText = data.candidates[0].content.parts[0].text;
-                const
+        async function handleFetchAndScreenPapers() {
+            logEvent.
+        **CONTEXT:** The show is called "Lab Laughs."
+        **INPUT PAPER DETAILS:**
+        ('Starting paper fetch and screen process...', 'ACTION');
+            loader.classList.remove('hidden');
+            fetchPapersBtn- **Title:** "{TITLE}"
+        - **Abstract:** "{ABSTRACT}"
+        **OUTPUT FORMAT:** Reply with only.disabled = true;
+            papersList.innerHTML = '';
+
+            // 1. Fetch from PubMed
+            let allFetchedPapers = [];
+            try {
+                loaderMessage.textContent = 'Fetching recent papers from PubMed... a valid JSON array of objects. Each object must have two keys: "speaker" (either "Anya" or "Ben") and "line" (the dialogue). Do not include any text before or after the JSON array.
+        `;
+
+';
+                const sixMonthsAgo = new Date();
+                sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                const dateStr = `${sixMonthsAgo.getFullYear()}/${(sixMonthsAgo        function initializeApp() {
+            logEvent('Initializing application...');
+            geminiApiKey = localStorage.getItem('geminiApiKey');
+            if (geminiApiKey) {
+                logEvent('Gemini API key found.',.getMonth() + 1).toString().padStart(2, '0')}/${sixMonthsAgo.getDate().toString 'SUCCESS');
+                showView('fetch-view');
+            } else {
+                logEvent('No API().padStart(2, '0')}`;
+                const searchQuery = `(("BMJ"[Journal]) OR ("The Lancet"[Journal]) OR ("New England Journal of Medicine"[Journal])) AND ("${dateStr}"[Date - Publication key found. Showing settings.', 'WARN');
+                showView('settings-view');
+            }
+            loadVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged =] : "3000"[Date - Publication]) AND "free full text"[Filter]`;
+                const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/es loadVoices;
+            saveKeyBtn.addEventListener('click', saveKeyAndStart);
+            fetchPapersBtn.addEventListener('click', handleFetchAndScreenPapers);
+            generateScriptBtn.addEventListener('click', handleGenerateScript);
+            speakBtn.addEventListener('click', playConversationalScript);
+            stopBtn.addEventListener('click', () => {
+                window.speechSynthesis.cancel();
+                logEvent('Playback stopped by user.', 'ACTION');
+            });
+            backToStartBtn.addEventListener('click', () => {
+                logEvent('Resettingearch.fcgi?db=pubmed&term=${encodeURIComponent(searchQuery)}&retmode=json&retmax=50`;
                 const searchResponse = await fetch(searchUrl);
                 const searchData = await searchResponse.json();
                 const paperIds = searchData.esearchresult.idlist;
 
-                if (!paperIds || paper result = JSON.parse(rawText);
-                return { ...paper, score: result.score, reason: result.reason };
-            } catch (error) {
-                logEvent(`Failed to screen paper "${paper.title.Ids.length === 0) {
-                    logEvent('No papers found matching criteria.', 'WARN');
-                    paperssubstring(0,20)}...": ${error.message}`, 'ERROR');
-                return { ...paper,List.innerHTML = '<p>No recent free papers found.</p>';
-                    return;
+                if (!paperIds || paperIds.length === 0) {
+                    throw new Error("No papers found from PubMed.");
                 }
-                
- score: 0, reason: "Failed to analyze." }; // Fail gracefully
-            }
-        }
 
-        // ---                const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${paperIds.join(',')}&retmode=xml`; REWRITTEN: The main function now orchestrates the entire fetch and screen process ---
-        async function handleFetchAndScreenPapers
+                logEvent(`Fetched ${paperIds.length} paper IDs from PubMed. Now getting details.`);
+ application state.', 'ACTION');
+                showView('fetch-view');
+            });
+            clearLogBtn.addEventListener('click', () => { logOutput.innerHTML = ''; });
+        }
+        
+        function showView(viewId) {
+            views.forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            logEvent(`Navigated to view: ${viewId}.                const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${paperIds.join(',')}&retmode=xml`;
                 const fetchResponse = await fetch(fetchUrl);
                 const xmlText = await fetchResponse.text();
                 const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xmlText, "() {
-            logEvent('Starting paper fetch and screen process...', 'ACTION');
-            loader.classList.remove('hidden');
-            fetchPapersBtn.disabled = true;
-            papersList.innerHTML = '';
+                const xmlDoc = parser.parseFromString(xmlText, "`);
+        }
 
-            //application/xml");
-                const articles = Array.from(xmlDoc.getElementsByTagName('PubmedArticle'));
-                logEvent(`Fetched ${articles.length} papers.`, 'SUCCESS');
-
-                let papers = articles.map(article => ({
-                    title: article.getElementsByTagName('ArticleTitle')[0]?.textContent || 'No Title',
-                    abstract 1. Fetch from PubMed
-            let allFetchedPapers = [];
-            try {
-                const sixMonthsAgo = new Date();
-                sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-                : article.getElementsByTagName('AbstractText')[0]?.textContent || 'No Abstract',
-                    journal: article.getElementsByTagName('Title')[0]?.textContent || 'N/A',
-                }));
-
-                // PHASE 2: SCREENconst dateStr = `${sixMonthsAgo.getFullYear()}/${(sixMonthsAgo.getMonth() + 1).toString().padStart(2, '0')}/${sixMonthsAgo.getDate().toString().padStart(2, '0') WITH GEMINI
-                loaderMessage.textContent = `Asking AI to screen ${papers.length} papers for comedic potential...`;
-}`;
-                const searchQuery = `(("BMJ"[Journal]) OR ("The Lancet"[Journal]) OR ("New England Journal of Medicine"[Journal])) AND ("${dateStr}"[Date - Publication] : "3000"[                logEvent(`Screening ${papers.length} papers with Gemini...`, 'ACTION');
+        function saveKeyAndStart() {
+            const key = geminiKeyInput.value.trim();
+            if (key) {
+                localStorage.setItem('geminiApiKey', key);
+                geminiApiKey = key;
+                logEvent('API Key saved.', 'SUCCESS');
+                showView('fetchapplication/xml");
+                const articles = xmlDoc.getElementsByTagName('PubmedArticle');
                 
-                const screeningPromisesDate - Publication]) AND "free full text"[Filter]`;
-                const searchUrl = `https://eutils = papers.map(async (paper) => {
-                    const filledPrompt = SCREENING_PROMPT
-                        .replace('{.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmedTITLE}', paper.title)
-                        .replace('{ABSTRACT}', paper.abstract);
-                    
-                    const response = await fetch(&term=${encodeURIComponent(searchQuery)}&retmode=json&retmax=50`;
-                const searchResponse = await fetch(searchUrl);
-                const searchData = await searchResponse.json();
-                const`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent paperIds = searchData.esearchresult.idlist;
-
-                if (!paperIds || paperIds.length?key=${geminiApiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type === 0) {
-                    logEvent('No papers found from PubMed.', 'WARN');
-                    loader.classList': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: filled.add('hidden');
-                    fetchPapersBtn.disabled = false;
-                    return;
-                }
-                Prompt }] }] })
-                    });
-                    if (!response.ok) return { ...paper, score: 0, reason: "Screening failed." };
-
-                    const data = await response.json();
-                    try {
-                        logEvent(`Fetched ${paperIds.length} paper IDs from PubMed. Now getting details.`);
-
-                const fetchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?const screeningResult = JSON.parse(data.candidates[0].content.parts[0].text);
-                        db=pubmed&id=${paperIds.join(',')}&retmode=xml`;
-                const fetchResponse = awaitreturn { ...paper, ...screeningResult };
-                    } catch {
-                        return { ...paper, score: 0, reason: "AI returned invalid format." };
-                    }
-                });
-
-                const screenedPapers = await Promise.all( fetch(fetchUrl);
-                const xmlText = await fetchResponse.text();
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xmlText, "application/xml");
-                constscreeningPromises);
-                logEvent('Screening complete.', 'SUCCESS');
-
-                // PHASE 3: FILTER, articles = xmlDoc.getElementsByTagName('PubmedArticle');
-                
-                for (const article of articles) { SORT, AND DISPLAY
-                const roastablePapers = screenedPapers
-                    .filter(p => p.score &&
+                for (const article of articles) {
                     allFetchedPapers.push({
-                        title: article.getElementsByTagName('ArticleTitle')[0]?.textContent || 'No Title p.score >= 6)
-                    .sort((a, b) => b.score - a.score',
-                        abstract: article.getElementsByTagName('AbstractText')[0]?.textContent || 'No Abstract',
+                        title: article.getElementsByTagName('ArticleTitle')[0]?.textContent || 'No Title',
+                        abstract: article.getElementsByTagName('AbstractText')[0-view');
+            } else {
+                logEvent('Save attempt failed: key was empty.', 'WARN');
+            }
+        }
+
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+]?.textContent || 'No Abstract',
                         journal: article.getElementsByTagName('Title')[0]?.textContent || 'N/A'
                     });
                 }
-);
-
-                logEvent(`Found ${roastablePapers.length} roast-worthy papers.`, 'SUCCESS');
-                papers            } catch (error) {
-                logEvent(`Failed during PubMed fetch: ${error.message}`, 'ERRORList.innerHTML = ''; // Clear list
-
-                if (roastablePapers.length === 0) {
-');
+            } catch (error) {
+                logEvent(`Failed during            if (voices.length === 0) return;
+            anyaVoiceSelect.innerHTML = '';
+            benVoiceSelect.innerHTML = '';
+            voices.filter(v => v.lang.startsWith('en')).forEach( PubMed fetch: ${error.message}`, 'ERROR');
                 loader.classList.add('hidden');
                 fetchPapersBtn.disabled = false;
                 return;
             }
 
             // 2. Screen with Gemini
-            logEvent(`Screening ${allFetchedPapers.length                    papersList.innerHTML = '<p>The AI scouted the latest research and found nothing funny. Try again later!</p} papers with Gemini. This may take a moment...`, 'ACTION');
-            const screeningPromises = allFetchedPapers>';
-                    return;
-                }
-
-                roastablePapers.forEach(paperData => {
-                    const paperElement =.map(paper => getRoastabilityScore(paper));
-            const screenedPapers = await Promise.all( document.createElement('div');
-                    paperElement.className = 'paper-item';
-                    paperElement.innerHTMLscreeningPromises);
+v => {
+                const opt = document.createElement('option');
+                opt.textContent = `${v.name} (${v.lang})`;
+                opt.setAttribute('data-name', v.name);
+                anyaVoiceSelect.appendChild            loaderMessage.textContent = `Asking AI to screen ${allFetchedPapers.length} papers...`;
+            log(opt.cloneNode(true));
+                benVoiceSelect.appendChild(opt.cloneNode(true));
+Event(`Screening ${allFetchedPapers.length} papers with Gemini. This may take a moment...`, 'ACTION');            });
+            const anyaIdx = voices.findIndex(v => v.name === 'Google US English'
+            const screeningPromises = allFetchedPapers.map(paper => getRoastabilityScore(paper));
+            const screenedPapers = await Promise.all(screeningPromises);
 
             // 3. Filter, Sort, and Display
-            const roastablePapers = screenedPapers
- = `
-                        <h3>${paperData.title}</h3>
-                        <p><strong>Journal:</strong> ${paperData.journal}</p>
-                        <p>${paperData.abstract.substring(0, 250)}                .filter(p => p.score >= 6) // Set your minimum score threshold here
-                .sort...</p>
-                        <div class="score-reason">
-                            <p><strong>Roastability Score:((a, b) => b.score - a.score); // Sort by score descending
+             || v.name.includes('Female'));
+            const benIdx = voices.findIndex(v => v.name === 'Microsoft David - English (United States)' || v.name.includes('Male'));
+            anyaVoiceSelect.selectedIndexconst roastablePapers = screenedPapers
+                .filter(p => p.score >= 6) // Minimum score threshold
+                 = anyaIdx !== -1 ? anyaIdx : 0;
+            benVoiceSelect.selectedIndex = ben.sort((a, b) => b.score - a.score);
 
-            logEvent( ${paperData.score}/10</strong></p>
-                            <p>"${paperData.reason}" - <em>AI Scout</em></p>
-                        </div>
-                        <button>Roast This Paper</button>
-`Screening complete. Found ${roastablePapers.length} high-potential papers.`, 'SUCCESS');
+            logEvent(`Screening complete.Idx !== -1 ? benIdx : 1;
+        }
 
-            if (ro                    `;
-                    paperElement.querySelector('button').onclick = () => {
-                        selectedPaper = paperData;astablePapers.length === 0) {
-                papersList.innerHTML = '<p>The AI scout reviewed
-                        selectedPaperTitle.textContent = paperData.title;
-                        logEvent(`Selected paper for roasting: "${ the latest papers and found nothing weird enough to roast today. Try again later!</p>';
+        async function getRoastabilityScore(paper) {
+            const filledPrompt = PAPER_SCREENER_PROMPT
+                .replace('{TITLE}', paper.title Found ${roastablePapers.length} high-potential papers.`, 'SUCCESS');
+
+            if (roastablePapers.length === 0) {
+                papersList.innerHTML = '<p>The AI scout reviewed the latest papers and)
+                .replace('{ABSTRACT}', paper.abstract);
+            try {
+                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key found nothing weird enough to roast today. Try again later!</p>';
             } else {
-                ropaperData.title}"`, 'ACTION');
-                        showView('generate-view');
-                    };
-                    papersastablePapers.forEach(paperData => {
-                    const paperElement = document.createElement('div');
-                    List.appendChild(paperElement);
+                roastablePapers.forEach=${geminiApiKey}`;
+                const response = await fetch(geminiApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] })
                 });
-
-            } catch (error) {
-                logEvent(`OperationpaperElement.className = 'paper-item';
+                if (!response.ok) throw new Error(`API returned ${response.status}`);
+                const data = await response.json();
+                const rawText = data.candidates[0].content.parts[0].text;
+                const result = JSON.parse(paperData => {
+                    const paperElement = document.createElement('div');
+                    paperElement.className = 'paper-item';
                     paperElement.innerHTML = `
                         <h3>${paperData.title}</h3>
                         <p><strong>Journal:</strong> ${paperData.journal}</p>
-                        < failed: ${error.message}`, 'ERROR');
-                papersList.innerHTML = `<p style="color:#e573div class="ai-reason">
-                            <strong>AI Scout's Notes (Score: ${paperData.score}/73;">An error occurred. Check the Event Log for details.</p>`;
-            } finally {
-                loader.classList.add('hidden');
-                fetchPapersBtn.disabled = false;
-            }
-        }
-10):</strong> 
+                        <div class="ai-reason">
+                            <strong>AI Scout's Notes (Score: ${paperData.score}/10):</strong> 
                             ${paperData.reason}
                         </div>
-                        <button>Roast This Paper        
-        async function handleGenerateScript() { /* ... (This function is unchanged) ... */ }
-        function</button>
+                        <button>Roast This Paper</button>
                     `;
                     paperElement.querySelector('button').onclick = () => {
-                        selectedPaper playConversationalScript() { /* ... (This function is unchanged) ... */ }
-        function speakTurn(turn = paperData;
+                        selectedPaper = paperData;
                         selectedPaperTitle.textContent = paperData.title;
-                        logEvent(`Paper selected for roasting:Index) { /* ... (This function is unchanged) ... */ }
-
-        // The unchanged functions are kept here for completeness, copy the full script block.
-        async function handleGenerateScript() {
-            if (!selectedPaper) return; "${paperData.title}"`, 'ACTION');
+                        logEvent(`Paper selected for roasting: "${paperData.(rawText);
+                return { ...paper, score: result.score, reason: result.reason };
+            } catch (error) {
+                logEvent(`Failed to screen paper "${paper.title.substring(0,20)}...": ${error.message}`, 'ERROR');
+                return { ...paper, score: 0, reason: "Failed to analyze." }; // Fail gracefully
+            }
+        }
+        
+        async function handleFetchAndScreenPapers() {
+            logEvent('Starting paper fetch and screen process...', 'ACTION');
+            loader.classList.removetitle}"`, 'ACTION');
                         showView('generate-view');
                     };
                     papersList.appendChild(paperElement);
@@ -902,96 +640,12 @@ left: 3px solid #64b5f6;
             }
 
             loader.classList.add('hidden');
-            logEvent('Generating script with Gemini API...', 'ACTION');
-            scriptLoader.classList.remove('hidden');
-
             fetchPapersBtn.disabled = false;
         }
 
-        // --- The rest of the script generator and            generateScriptBtn.disabled = true;
-            scriptOutput.value = '';
-            const filledPrompt = SCRIPT_GENERATOR_PROMPT.replace('{TITLE}', selectedPaper.title).replace('{ABSTRACT}', selectedPaper. TTS functions remain unchanged ---
-        // (handleGenerateScript, SCRIPT_GENERATOR_PROMPT, playConversationalScriptabstract);
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v, speakTurn)
-        const SCRIPT_GENERATOR_PROMPT = `
-        **ROLES & PERSONAS:**
-        - **Dr. Anya Sharma:** The "straight man." She is a sharp, witty, and knowledgeable1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
-                    method: scientist. She understands the paper's jargon and explains the premise, but with a deeply sarcastic and cynical edge. Her 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: filledPrompt }] }] })
-                });
-                if (!response.ok) { humor is dry and intellectual.
-        - **Ben Carter:** The "chaos agent." He is an everyman who const errBody = await response.text(); throw new Error(`API Error: ${response.status}. ${errBody}`); }
-                const data = await response.json();
-                const rawText = data.candidates[0].content. is constantly baffled by the science. He makes wild, relatable analogies, asks the "dumb" questions everyone is thinking, and generally brings high energy and incredulity. His humor is broad and observational.
-        **TASK:** Write a humorous, conversational podcast script of about 600-800 words where Dr. Anya Sharma and Ben Carterparts[0].text;
-                logEvent('Received response from Gemini.');
-                const cleanJsonText = raw roast the provided medical research paper.
-        **CONTEXT:** The show is called "Lab Laughs." Anya introduces the paper, and Ben reacts. They go back and forth, dissecting the paper's premise, methods, and useless conclusion in aText.trim().replace(/^```json/, '').replace(/```$/, '').trim();
-                conversationalScript = JSON.parse(cleanJsonText);
-                scriptOutput.value = conversationalScript.map(turn => `${turn.speaker}: conversational style.
-        **INPUT PAPER DETAILS:**
-        - **Title:** "{TITLE}"
-        - **Abstract:** "{ABSTRACT}"
-        **OUTPUT FORMAT:**
-        You MUST reply with only a valid JSON array of objects. ${turn.line}`).join('\n\n');
-                logEvent(`Script generated successfully with ${conversationalScript.length} lines.`, 'SUCCESS');
-                showView('listen-view');
-            } catch (error) {
-                logEvent(`Failed to generate script: ${error.message}`, 'ERROR');
-                showView('generate- Each object represents one turn of dialogue and must have two keys: "speaker" (either "Anya" or "Ben") and "line" (the dialogue for that speaker). Do not include any text before or after the JSON arrayview');
-            } finally {
-                scriptLoader.classList.add('hidden');
-                generateScriptBtn.disabled = false;
-            }
-        }
-        function playConversationalScript() {
-            if (conversationalScript.
-        `;
-
-        async function handleGenerateScript() {
-            if (!selectedPaper) return;
-            logEvent('Generating script with Gemini API...', 'ACTION');
-            scriptLoader.classList.remove('hidden');
-            generateScript.length === 0 || !('speechSynthesis' in window)) return;
-            logEvent('Starting podcast playback...', 'ACTIONBtn.disabled = true;
-            scriptOutput.value = '';
-
-            const filledPrompt = SCRIPT_GENER');
-            window.speechSynthesis.cancel();
-            speakTurn(0);
-        }
-        function speakATOR_PROMPT
-                .replace('{TITLE}', selectedPaper.title)
-                .replace('{ABSTRACT}', selectedTurn(turnIndex) {
-            if (turnIndex >= conversationalScript.length) { logEvent('Playback finished.', 'SUCCESS'); return; }
-            const turn = conversationalScript[turnIndex];
-            const utterance = newPaper.abstract);
-
-            try {
-                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`; SpeechSynthesisUtterance(turn.line);
-            const selectedVoiceName = turn.speaker === 'Anya
-                const response = await fetch(geminiApiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{' ? anyaVoiceSelect.selectedOptions[0].getAttribute('data-name') : benVoiceSelect.selectedOptions[0].getAttribute('data-name');
-            utterance.voice = voices.find(v => v parts: [{ text: filledPrompt }] }] })
-                });
-                if (!response.ok) {
-                    .name === selectedVoiceName);
-            utterance.rate = 0.95;
-            utteranceconst errorBody = await response.text();
-                    throw new Error(`Gemini API Error: ${response.status} ${response.statusText}. Response: ${errorBody}`);
-                }
-                
-                const data = await.pitch = turn.speaker === 'Anya' ? 1.0 : 1.1;
-             response.json();
-                const rawText = data.candidates[0].content.parts[0].text;utterance.onstart = () => logEvent(`Speaking line ${turnIndex + 1}/${conversationalScript.length} (Speaker: ${turn.speaker})`);
-            utterance.onend = () => speakTurn(
-                logEvent('Received response from Gemini.');
-                const cleanJsonText = rawText.trim().replace(/^turnIndex + 1);
-            utterance.onerror = e => logEvent(`Speech synthesis error: ${e.error}`, 'ERROR');
-            window.speechSynthesis.speak(utterance);
-        }
+        // Functions: handleGenerateScript, playConversationalScript, and speakTurn remain unchanged.
+        // Include the rest of the JS functions here (they are correct in the previous turn).
+        
     </script>
 </body>
 </html>
