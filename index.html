@@ -100,7 +100,7 @@
             font-size: 0.9rem;
         }
 
-        /* --- NEW: Event Log Styling --- */
+        /* Event Log Styling */
         #log-container {
             margin-top: 2.5rem;
             border-top: 2px solid #555;
@@ -183,7 +183,7 @@
             <button id="back-to-start-btn">Start Over</button>
         </div>
 
-        <!-- NEW: Event Log -->
+        <!-- Event Log -->
         <div id="log-container">
             <div id="log-header">
                 <h2>Event Log</h2>
@@ -194,10 +194,8 @@
     </main>
 
     <script>
-        // --- NEW: Log Output Element ---
         const logOutput = document.getElementById('log-output');
 
-        // --- NEW: Centralized Logging Function ---
         function logEvent(message, type = 'INFO') {
             const timestamp = new Date().toLocaleTimeString();
             const logEntry = document.createElement('div');
@@ -217,7 +215,9 @@
         // 1. INITIAL SETUP & PWA REGISTRATION
         window.addEventListener('load', () => {
           if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
+            // --- THIS IS THE FIX ---
+            // The leading slash "/" has been removed from the path.
+            navigator.serviceWorker.register('service-worker.js')
               .then(reg => logEvent('Service Worker registered successfully.', 'SUCCESS'))
               .catch(err => logEvent(`Service Worker registration failed: ${err}`, 'ERROR'));
           }
@@ -427,7 +427,6 @@
                 const data = await response.json();
                 const rawText = data.candidates[0].content.parts[0].text;
                 logEvent('Received response from Gemini.');
-                // Clean the raw text to ensure it's valid JSON
                 const cleanJsonText = rawText.trim().replace(/^```json/, '').replace(/```$/, '').trim();
                 conversationalScript = JSON.parse(cleanJsonText);
                 const formattedForDisplay = conversationalScript.map(turn => `${turn.speaker}: ${turn.line}`).join('\n\n');
